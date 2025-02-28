@@ -83,15 +83,15 @@ int main()
     float dt = GetFrameTime();
     worldSpaceCamera.target = (Vector2){ cameraX, cameraY };
     
-    block.AddForce((Vector2){0, 9});
-    block.Update(dt, tm);
+    //block.AddForce((Vector2){0, 9});
+    //block.Update(dt, tm);
 
     BeginTextureMode(target);
       ClearBackground(RAYWHITE);
 
       BeginMode2D(worldSpaceCamera);
         // Draw The Actual World 
-        DrawCircle(block.position.x,block.position.y,8,RED);
+        //DrawCircle(block.position.x,block.position.y,8,RED);
         tiles::draw(tm, ts, vW, vH);   
       EndMode2D();
     EndTextureMode();
