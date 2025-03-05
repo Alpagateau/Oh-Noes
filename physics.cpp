@@ -5,7 +5,7 @@ Rigidbody::Rigidbody()
   position = (Vector2){0,0};
   velocity = (Vector2){0,0};
   mass = 1;
-  force_acc = (Vector2){0,-1};
+  force_acc = (Vector2){0,0};
   for(int i = 0; i < 64; i++)
   {
     collision_mask[i] = true;
@@ -41,7 +41,7 @@ bool PhysicWorld::CheckCollision(Rigidbody* a, Rigidbody* b)
   Rectangle world_space_a = (Rectangle)
   {
       a->position.x + a->collision.x,
-      a->position.y + a->collision.y,
+      a->bposition.y + a->collision.y,
       a->collision.width,
       a->collision.height
   };
@@ -91,7 +91,7 @@ bool PhysicWorld::CheckCollisionTilemap(Rigidbody a, tilemap& tm)
 }
 */
 
-void PhysicWorld::Update(float dt)
+void PhysicsWorldUpdate(float dt)
 {
   //First Apply Collisions
   for(int i = 0; i < bodies.size(); i++)
@@ -100,7 +100,7 @@ void PhysicWorld::Update(float dt)
     {
       if(i!=j)
       {
-        if(bodies[i]->_static && bodies[j]->_static)
+        if(bodies[i]->static && bodies[j]->static)
           continue;
         if(CheckCollision(bodies[i], bodies[j]))
         {
@@ -112,18 +112,14 @@ void PhysicWorld::Update(float dt)
           int y_mul = 1;
           //Check quadrant
           
-          Vector2 delta = Vector2Subtract(bodies[i]->position, bodies[j]->position);
-          if(delta.x > 0)
-            x_mul = -1;
-          if(delta.y < 0)
-            y_mul = -1;
+          Vector2 delta = 
 
           //Apply collision
-          if(bodies[i]->_static)
+          if(bodies[i]->static)
           {
             ratio =1;
           }
-          if(bodies[j]->_static)
+          if(bodies[j]->static)
           {
             ratio = 0;
           } 
@@ -137,8 +133,7 @@ void PhysicWorld::Update(float dt)
       }
     }
   }
-
-  //And now apply forces
-
 }
+
+
 

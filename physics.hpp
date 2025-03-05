@@ -25,8 +25,8 @@ public:
   Vector2 velocity;
   Rectangle collision;
   float mass;
-  bool collision_mask[100];
-  bool _static = false;
+  bool collision_mask[64];
+  bool static = false;
   Vector2 force_acc;
   int collision_layer;
 
@@ -39,7 +39,6 @@ public:
 class PhysicWorld 
 {
 public:
-  PhysicWorld();
   Vector2 gravity;
   std::vector<Rigidbody*> bodies;
 
