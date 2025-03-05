@@ -1,21 +1,28 @@
-lib = -llua -lraylib 
-libdir = -L./lua54 -L./raylib/build/raylib
-idir = -I./
-opts = -g -static-libstdc++
-filename = ./test
+#Linking with raylib and lua in a crossplatform manner
+WIN_FLAGS = -static-libstdc++ -static-libgcc -lopengl32 -lgdi32 -lwinmm -Wl,-Bstatic -lstdc++ -lpthread
+LIB_DIR_WIN = -L/home/martin/LIBS/raylib/win/lib  -L/home/martin/LIBS/lua/win
+LIB_DIR_LINUX = -L/home/martin/LIBS/raylib/linux/lib/ -L/home/martin/LIBS/lua/linux
+IDIR = -I/home/martin/LIBS/raylib/include -I/home/martin/LIBS/lua/include -I/home/martin/LIBS
+LIBS = -lraylib -llua54
 
-test : tiles.o main.o physics.o
-	echo Building [test]
-	g++ main.o tiles.o physics.o -o $(filename) $(libdir) $(lib) $(opts) $(idir)
+OPTS = -g
+
+linux: tiles.o main.o physics.o
+	g++ main.o tiles.o physics.o -o main-linux $(OPTS) $(LIBS) $(LIB_DIR_LINUX) $(IDIR)
+
+windows: *.cpp
+	x86_64-w64-mingw32-g++ *.cpp -o main-win $(IDIR) $(LIB_DIR_WIN) $(LIBS) $(WIN_FLAGS)
+	cp /home/martin/LIBS/lua/win/lua54.dll ./
 
 main.o : main.cpp
 	echo Building [main.cpp]
-	g++ main.cpp -c main.o -I./ $(opts)
+	g++ main.cpp -c main.o -I./ $(OPTS)
 
 tiles.o : tiles.cpp 
 	echo Building [tiles.cpp]
-	g++ tiles.cpp -c tiles.o -I./ $(opts)
+	g++ tiles.cpp -c tiles.o -I./ $(OPTS)
 
 physics.o : physics.cpp 
 	echo Building [physics.cpp]
-	g++ physics.cpp -c physics.o -I./ $(opts) $(libdir) $(lib) $(idir)
+	g++ physics.cpp -c physics.o -I./ $(OPTS) $(IDIR)
+	
