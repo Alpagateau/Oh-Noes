@@ -1,34 +1,9 @@
 #include "physics.hpp"
+#include <iostream>
 //pff
-Rigidbody::Rigidbody()
-{
-  position = (Vector2){0,0};
-  velocity = (Vector2){0,0};
-  mass = 1;
-  force_acc = (Vector2){0,-1};
-  for(int i = 0; i < 64; i++)
-  {
-    collision_mask[i] = true;
-  }
-}
+//
 
-void Rigidbody::AddForce(Vector2 force)
-{
-  force_acc = Vector2Add(force, force_acc);
-}
-
-Rectangle Rigidbody::GetWorldCollision()
-{
-  Rectangle world_space_a = (Rectangle)
-  {
-      position.x + collision.x,
-      position.y + collision.y,
-      collision.width,
-      collision.height
-  };
-
-  return world_space_a;
-}
+#define PI 3.14159265358979323846
 
 PhysicWorld::PhysicWorld()
 {
@@ -36,109 +11,122 @@ PhysicWorld::PhysicWorld()
   gravity = {0, 0};
 }
 
-bool PhysicWorld::CheckCollision(Rigidbody* a, Rigidbody* b)
+Rigidbody* PhysicWorld::Subscribe(Rigidbody body)
 {
-  Rectangle world_space_a = (Rectangle)
-  {
-      a->position.x + a->collision.x,
-      a->position.y + a->collision.y,
-      a->collision.width,
-      a->collision.height
-  };
-
-  Rectangle world_space_b = (Rectangle)
-  {
-      b->position.x + b->collision.x,
-      b->position.y + b->collision.y,
-      b->collision.width,
-      b->collision.height
-  };
-
-  return CheckCollisionRecs(world_space_a, world_space_b);
+  bodies.push_back(body);
+  return &bodies.back();
 }
-/*
-bool PhysicWorld::CheckCollisionTilemap(Rigidbody a, tilemap& tm)
+
+void PhysicWorld::Update(float adt)
 {
-  bool isGood = true;
-  Rectangle world_space = (Rectangle)
+  int step_per_frame = 50;
+  float dt = adt/step_per_frame;
+  for(int t = 0; t <step_per_frame; t++)
   {
-      a->osition.x + a->collision.x,
-      a->position.y + a->collision.y,
-      a->collision.width,
-      a->collision.height
-  };
-  for(int i = 0; i < tm.tiles.size(); i++)
-  {
-    if(isGood)
+    for(int i = 0; i < bodies.size(); i++)
     {
-      if(a->collision_mask[tm.tiles[i].val])
+      //Apply gravity
+      bodies[i].force_acc = Vector2Add(bodies[i].force_acc, Vector2Scale(gravity, bodies[i].mass));
+      //Integrate
+      EulerInt(i, dt);
+      //then remove force acc
+      bodies[i].force_acc = {0,0};
+      //Fake borders rn
+      BorderRepelent(i);
+    }
+
+    for(int i = 0; i < bodies.size(); i++)
+    {
+      for(int j = i; j < bodies.size(); j++)
       {
-        Rectangle r = (Rectangle)
+        if(i != j)
         {
-          tm.tiles[i].posx * tm.scale,
-          tm.tiles[i].posy * tm.scale,
-          tm.scale,
-          tm.scale
-        };
-        if(CheckCollisionRecs(world_space, r))
-        {
-          isGood = false;
+          CheckCollision(i, j);
         }
       }
     }
   }
-  return !isGood;
 }
-*/
 
-void PhysicWorld::Update(float dt)
+void PhysicWorld::EulerInt(int idx, float dt)
 {
-  //First Apply Collisions
-  for(int i = 0; i < bodies.size(); i++)
-  { 
-    for(int j = i; j < bodies.size(); j++)
-    {
-      if(i!=j)
-      {
-        if(bodies[i]->_static && bodies[j]->_static)
-          continue;
-        if(CheckCollision(bodies[i], bodies[j]))
-        {
-          Rectangle col_rec = GetCollisionRec(bodies[i]->GetWorldCollision(), bodies[j]->GetWorldCollision());
-          float ratio = (bodies[i]->mass)/(bodies[i]->mass + bodies[j]->mass);
-          
-          //multipliers depending on the quadrant of the collision;
-          int x_mul = 1;
-          int y_mul = 1;
-          //Check quadrant
-          
-          Vector2 delta = Vector2Subtract(bodies[i]->position, bodies[j]->position);
-          if(delta.x > 0)
-            x_mul = -1;
-          if(delta.y < 0)
-            y_mul = -1;
-
-          //Apply collision
-          if(bodies[i]->_static)
-          {
-            ratio =1;
-          }
-          if(bodies[j]->_static)
-          {
-            ratio = 0;
-          } 
-          
-          bodies[i]->position.x -= (1-ratio)*x_mul*col_rec.width;
-          bodies[i]->position.y -= (1-ratio)*y_mul*col_rec.height;
-          
-          bodies[j]->position.x += ratio*x_mul*col_rec.width;
-          bodies[j]->position.y += ratio*y_mul*col_rec.height;
-        }
-      }
-    }
-  }
-
-  //And now apply forces
-
+  //double half integrater hehe
+  bodies[idx].position = Vector2Add(
+    bodies[idx].position,
+    Vector2Scale(bodies[idx].velocity,dt*0.5)
+  );
+  bodies[idx].velocity = Vector2Add(
+    bodies[idx].velocity,
+    Vector2Scale(bodies[idx].force_acc, (1/bodies[idx].mass)*dt)
+  );
+  bodies[idx].position = Vector2Add(
+    bodies[idx].position,
+    Vector2Scale(bodies[idx].velocity, dt*0.5)
+  );
 }
 
+void PhysicWorld::BorderRepelent(int i)
+{
+  if(bodies[i].position.x > 160-bodies[i].radius)
+  {
+    bodies[i].velocity.x *= -bodies[i].Cr;
+    bodies[i].position.x = 160-bodies[i].radius;
+  }
+  if(bodies[i].position.x < bodies[i].radius)
+  {
+    bodies[i].velocity.x *= -bodies[i].Cr;
+    bodies[i].position.x = bodies[i].radius;
+  }
+  if(bodies[i].position.y > 144-bodies[i].radius)
+  {
+    bodies[i].velocity.y *= -bodies[i].Cr;
+    bodies[i].position.y = 144-bodies[i].radius;
+  }
+  if(bodies[i].position.y < bodies[i].radius)
+  {
+    bodies[i].velocity.y *= -bodies[i].Cr;
+    bodies[i].position.y = bodies[i].radius;
+  }
+}
+
+void PhysicWorld::CheckCollision(int a, int b)
+{
+  Vector2 off = Vector2Subtract(bodies[a].position, bodies[b].position);  
+  if(Vector2LengthSqr(off) < (bodies[a].radius + bodies[b].radius)*(bodies[a].radius + bodies[b].radius))
+  {
+    //Collision happens here
+    //First, we need a new base, Un and Ut for u normal and u tangent 
+    Vector2 Un = bodies[b].position - bodies[a].position;
+    Un = Vector2Normalize(Un);
+    //From Ut, simply rotate 90 degrees
+    Vector2 Ut = Vector2Rotate(Un, PI/2);
+
+    //Now, let's project our speeds in the new base
+    float ua = Vector2DotProduct(Un, bodies[a].velocity);
+    float ub = Vector2DotProduct(Un, bodies[b].velocity);
+    float ea = Vector2DotProduct(Ut, bodies[a].velocity);
+    float eb = Vector2DotProduct(Ut, bodies[b].velocity);
+    std::cout << ua << "||" << ub <<std::endl;
+
+    //Finally, calculate the constants
+    float M = bodies[a].mass + bodies[b].mass;
+    float ms = bodies[a].mass * ua + bodies[b].mass * ub;
+    float Delta = ub - ua;
+    float Cr = (bodies[a].Cr + bodies[b].Cr)/2;
+
+    //we can now calculate the new speeds 
+    float va = bodies[b].mass * Cr * Delta / M;
+    va += ms/M;
+    float vb = bodies[a].mass * Cr * Delta / M;
+    vb += ms/M;
+
+    //Now put the new vectors back. 
+    bodies[a].velocity = Un*va + Ut*ea;
+    bodies[b].velocity = Un*vb + Ut*eb;
+    
+    //Now, move the two circles based on weight
+    float Dr = (bodies[a].radius + bodies[b].radius)-Vector2Length(off);
+    bodies[a].position -= Un * (bodies[b].mass / M);
+    bodies[b].position += Un * (bodies[a].mass / M); 
+  }
+}

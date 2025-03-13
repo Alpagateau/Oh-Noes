@@ -48,7 +48,7 @@ int main()
 
   float cameraX = 0;
   float cameraY = 0;
- 
+  PhysicWorld PWorld;
   //Load Level
   std::string lvl = lua["GetLevel"]();
   int x = 0;
@@ -70,29 +70,25 @@ int main()
     }
     x++;
   }
+  PWorld.gravity = {0, 9}; 
+  Rigidbody* block = PWorld.Subscribe((Rigidbody){{15,15}, {3,0}, 1, 8, 0.5, false, {0,0}});
+  Rigidbody* block2 = PWorld.Subscribe((Rigidbody){{15,45}, {-10,-3}, 4, 10, 0.9,false, {0,0}});
 
-  Rigidbody block;
-  block.position.x = 50;
-  block.position.y = 10;
-  block.velocity.x = 6;
-  block.velocity.y = -7;
-  block.collision = (Rectangle){-8, -8, 16, 16};
 
   while(!WindowShouldClose())
   {
     float dt = GetFrameTime();
     worldSpaceCamera.target = (Vector2){ cameraX, cameraY };
-    
-    //block.AddForce((Vector2){0, 9});
-    //block.Update(dt, tm);
-
+     
+    PWorld.Update(dt);
     BeginTextureMode(target);
       ClearBackground(RAYWHITE);
 
       BeginMode2D(worldSpaceCamera);
         // Draw The Actual World 
-        //DrawCircle(block.position.x,block.position.y,8,RED);
-        tiles::draw(tm, ts, vW, vH);   
+        DrawCircleV(block->position,block->radius,RED);
+        DrawCircleV(block2->position,block2->radius,BLUE);
+        //tiles::draw(tm, ts, vW, vH);
       EndMode2D();
     EndTextureMode();
 
@@ -104,4 +100,6 @@ int main()
       DrawFPS(GetScreenWidth() - 95, 10);
     EndDrawing();
   }
+
+  CloseWindow();
 }

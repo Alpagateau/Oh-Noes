@@ -1,9 +1,9 @@
 #ifndef PHYSICS_HPP
 #define PHYSICS_HPP
 #include "raylib.h"
-#include "tiles.hpp"
 #include "raymath.h"
 #include <vector>
+#include <deque>
 
 //-------------------------------
 //         How It Works 
@@ -18,22 +18,16 @@
 //  -> mass 
 //  -> collider (axis align box)
 
-class Rigidbody 
-{
-public:
-  Vector2 position;
-  Vector2 velocity;
-  Rectangle collision;
-  float mass;
-  bool collision_mask[100];
-  bool _static = false;
-  Vector2 force_acc;
-  int collision_layer;
 
-  Rigidbody();
-  void AddForce(Vector2 force);
-  //void Update(float dt, tilemap& tm);
-  Rectangle GetWorldCollision();
+struct Rigidbody
+{
+  Vector2 position = {0,0};
+  Vector2 velocity = {0,0};
+  float mass = 1;
+  float radius = 1;
+  float Cr = 1;
+  bool isStatic = false;
+  Vector2 force_acc = {0,0};  
 };
 
 class PhysicWorld 
@@ -41,11 +35,13 @@ class PhysicWorld
 public:
   PhysicWorld();
   Vector2 gravity;
-  std::vector<Rigidbody*> bodies;
-
+  std::deque<Rigidbody> bodies;
+  
+  Rigidbody* Subscribe(Rigidbody);
   void Update(float dt);
-  bool CheckCollision(Rigidbody* a, Rigidbody* b);
-  //bool CheckCollisionTilemap(Rigidbody a, tilemap& tm);
+  void EulerInt(int idx, float dt);
+  void CheckCollision(int a, int b);
+  void BorderRepelent(int i);
 };
 
 #endif

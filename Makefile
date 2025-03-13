@@ -2,7 +2,7 @@
 WIN_FLAGS = -static-libstdc++ -static-libgcc -lopengl32 -lgdi32 -lwinmm -Wl,-Bstatic -lstdc++ -lpthread
 LIB_DIR_WIN = -L/home/martin/LIBS/raylib/win/lib  -L/home/martin/LIBS/lua/win
 LIB_DIR_LINUX = -L/home/martin/LIBS/raylib/linux/lib/ -L/home/martin/LIBS/lua/linux
-IDIR = -I/home/martin/LIBS/raylib/include -I/home/martin/LIBS/lua/include -I/home/martin/LIBS
+IDIR = -I/home/martin/LIBS/raylib/include -I/home/martin/LIBS/lua/include -I/home/martin/LIBS -I./
 LIBS = -lraylib -llua54
 
 OPTS = -g
@@ -16,7 +16,7 @@ windows: *.cpp
 
 main.o : main.cpp
 	echo Building [main.cpp]
-	g++ main.cpp -c main.o -I./ $(OPTS)
+	g++ main.cpp -c main.o -I./ $(IDIR) $(OPTS)
 
 tiles.o : tiles.cpp 
 	echo Building [tiles.cpp]
