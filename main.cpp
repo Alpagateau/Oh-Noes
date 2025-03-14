@@ -70,10 +70,19 @@ int main()
     }
     x++;
   }
-  PWorld.gravity = {0, 9}; 
-  Rigidbody* block = PWorld.Subscribe((Rigidbody){{15,15}, {3,0}, 1, 8, 0.5, false, {0,0}});
-  Rigidbody* block2 = PWorld.Subscribe((Rigidbody){{15,45}, {-10,-3}, 4, 10, 0.9,false, {0,0}});
-
+  PWorld.gravity = {0, 11}; 
+  //Rigidbody* block = PWorld.Subscribe((Rigidbody){{15,15}, {3,0}, 1, 8, 0.5, false, {0,0}});
+  //Rigidbody* block2 = PWorld.Subscribe((Rigidbody){{15,45}, {-10,-3}, 4, 10, 0.9, false, {0,0}});
+  Rigidbody* block = PWorld.NewBall({15, 15}, 8, 1, 1);
+  block->velocity = {4,0};
+  Rigidbody* block2 = PWorld.NewBall({12, 45}, 10, 4, 0.9);
+  block2->velocity = {-10,-3};
+  block2->is_static = true;
+  Rigidbody* block3 = PWorld.NewRec({50, 12}, {16, 32}, 3, 1);
+  block3->velocity = {10, 2};
+  Rigidbody* block4 = PWorld.NewRec({100, 100}, {64, 5}, 2000, 1);
+  block4->velocity = {10, 2};
+  block4->is_static = true;
 
   while(!WindowShouldClose())
   {
@@ -86,8 +95,22 @@ int main()
 
       BeginMode2D(worldSpaceCamera);
         // Draw The Actual World 
-        DrawCircleV(block->position,block->radius,RED);
-        DrawCircleV(block2->position,block2->radius,BLUE);
+        DrawCircleV(block->position,block->collider.param.r,RED);
+        DrawCircleV(block2->position,block2->collider.param.r,BLUE);
+        DrawRectangle(
+          block3->position.x - block3->collider.param.rec.x/2,
+          block3->position.y - block3->collider.param.rec.y/2,
+          block3->collider.param.rec.x,
+          block3->collider.param.rec.y,
+          GREEN
+        );
+        DrawRectangle(
+          block4->position.x - block4->collider.param.rec.x/2,
+          block4->position.y - block4->collider.param.rec.y/2,
+          block4->collider.param.rec.x,
+          block4->collider.param.rec.y,
+          PURPLE
+        );
         //tiles::draw(tm, ts, vW, vH);
       EndMode2D();
     EndTextureMode();
