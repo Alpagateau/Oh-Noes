@@ -7,7 +7,7 @@ LIBS = -lraylib -llua54
 
 OPTS = -g
 
-linux: tiles.o main.o physics.o
+linux: tiles.o main.o physics.o 
 	g++ main.o tiles.o physics.o -o main-linux $(OPTS) $(LIBS) $(LIB_DIR_LINUX) $(IDIR)
 
 windows: *.cpp
@@ -25,4 +25,5 @@ tiles.o : tiles.cpp
 physics.o : physics.cpp 
 	echo Building [physics.cpp]
 	g++ physics.cpp -c physics.o -I./ $(OPTS) $(IDIR)
-	
+
+

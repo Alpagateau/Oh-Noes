@@ -39,7 +39,7 @@ struct tilemap
 int loadTilesetCR(std::string,tileset&,int,int);
 int base64CharToInt(char c);
 namespace tiles {
-  int draw(tilemap &tm, tileset &ts, int maxX, int maxY);
+  int draw(tilemap &tm, tileset &ts, int maxX, int maxY, int minX, int minY);
 }
 
 #endif

@@ -52,7 +52,7 @@ int loadTilesetCR(std::string path, tileset& out, int c, int r)
 }
 
 
-int tiles::draw(tilemap &tm, tileset &ts, int maxX, int maxY)
+int tiles::draw(tilemap &tm, tileset &ts, int maxX, int maxY, int minX, int minY)
 {
   for(int i = 0; i < tm.tiles.size(); i++)
   {
@@ -62,7 +62,7 @@ int tiles::draw(tilemap &tm, tileset &ts, int maxX, int maxY)
     float s = tm.scale;
     if(nposx >= maxX || nposy >= maxY)
       continue; 
-    if((nposx+s) <= 0 || (nposy+s) <= 0)
+    if((nposx+s) <= minX || (nposy+s) <= minY)
       continue;
     int rat = (int)(ts.width/ts.twidth);
     int tposx = (int)t.val % rat;
