@@ -27,6 +27,42 @@ PhysicWorld::PhysicWorld(sol::state &p_lua)
   );
 }
 
+void PhysicWorld::Compile()
+{
+  float minx =  100000;
+  float maxx = -100000;
+  float miny =  100000;
+  float maxy = -100000;
+  
+  for(int i = 0; i < bodies.size(); i++)
+  {
+    if(bodies[i].is_static && bodies[i].collider.shape == SHAPE_REC){
+      if(bodies[i].position.x/16 < minx)
+        minx = bodies[i].position.x/16 - 0.5;
+      if(bodies[i].position.x/16 > maxx)
+        maxx = bodies[i].position.x/16 - 0.5;
+      if(bodies[i].position.y/16 < miny)
+        miny = bodies[i].position.y/16 - 0.5;
+      if(bodies[i].position.x/16 > maxy)
+        maxy = bodies[i].position.y/16 - 0.5;
+    }
+  }
+  int w = maxx - minx;
+  int h = maxy - miny;
+  pair cworld[w*h] = {0};
+ 
+  for(int i = 0; i < bodies.size(); i++)
+  {
+    if(bodies[i].is_static && bodies[i].collider.shape == SHAPE_REC){
+      int x = bodies[i].position.x/16 - minx;
+      int y = bodies[i].position.y/16 - miny;
+      cworld[x + w*y] = {i, bodies[i].is_active?1:0};
+    }
+  }
+
+  std::cout << minx << "|" << miny << "|" << maxx << "|" << maxy << std::endl;
+}
+
 void PhysicWorld::Cpp2Lua()
 {
   //Gravity 
@@ -89,18 +125,18 @@ Rigidbody* PhysicWorld::Subscribe(Rigidbody body)
 }
 
 void PhysicWorld::Update(float adt)
-{
+{  
   int step_per_frame = SUB_FRAME_COUNT;
   float dt = adt/step_per_frame;
   sub_frame_cols.clear();
   Lua2Cpp();
   for(int t = 0; t <step_per_frame; t++)
   {
+    double start_time = GetTime();
+    double single_time = 0;
     for(int i = 0; i < bodies.size(); i++)
     {
       if(!bodies[i].is_static){
-        //Apply gravity
-        //bodies[i].force_acc = Vector2Add(bodies[i].force_acc, Vector2Scale(gravity, bodies[i].mass));
         //Integrate
         EulerInt(i, dt);
         //then remove force acc 
@@ -109,7 +145,7 @@ void PhysicWorld::Update(float adt)
       }
       bodies[i].force_acc = {0,0};
     }
-
+    single_time = GetTime();
     for(int i = 0; i < bodies.size(); i++)
     {
       for(int j = i; j < bodies.size(); j++)
@@ -124,6 +160,10 @@ void PhysicWorld::Update(float adt)
         }
       }
     }
+    double final = GetTime();
+    double tot = final - start_time;
+    double single_percent = (single_time - start_time)/tot;
+    //std::cout << "Single Percent ; " << single_percent*100 << std::endl;
   }
   Cpp2Lua();
 
@@ -155,11 +195,13 @@ void PhysicWorld::EulerInt(int idx, float dt)
   bodies[idx].position += bodies[idx].velocity * dt * 0.5;
   bodies[idx].velocity += bodies[idx].force_acc * 3000 * (dt/bodies[idx].mass);
   bodies[idx].velocity += gravity * dt;
+  /*
   if(bodies[idx].force_acc != (Vector2){0,0})
   {
     std::cout << "[C++] Diff for " << idx << " [" << bodies[idx].force_acc.x << ";" << bodies[idx].force_acc.y << "]\n";
     std::cout << "[C++] Velocity " << idx << " [" << bodies[idx].velocity.x << ";" << bodies[idx].velocity.y << "]\n";
   } 
+  */
   bodies[idx].position = Vector2Add(
     bodies[idx].position,
     Vector2Scale(bodies[idx].velocity, dt*0.5)
@@ -218,7 +260,8 @@ void PhysicWorld::CheckCollision(int a, int b)
 {
   if(bodies[a].is_static && bodies[b].is_static)
     return;
-
+  if(Vector2Length(bodies[a].position - bodies[b].position) > causality)
+    return;
   if(bodies[a].collider.shape == SHAPE_CIRCLE && bodies[b].collider.shape == SHAPE_CIRCLE)
   {
     SSCollision(a,b);
@@ -248,7 +291,7 @@ void PhysicWorld::SSCollision(int a, int b)
     Vector2 Un = bodies[b].position - bodies[a].position;
     Un = Vector2Normalize(Un);
     //From Ut, simply rotate 90 degrees
-    Vector2 Ut = Vector2Rotate(Un, PI/2);
+    Vector2 Ut = {Un.y, -Un.x};
 
     //Now, let's project our speeds in the new base
     float ua = Vector2DotProduct(Un, bodies[a].velocity);
@@ -317,8 +360,8 @@ void PhysicWorld::SRCollision(int a, int b)
   };
   //Easy case, similar to rect
   if(
-    (bodies[a].position.x < rec2.x + rec2.width && bodies[a].position.x > rec2.x)  || 
-    (bodies[a].position.y < rec2.y + rec2.height && bodies[a].position.y > rec2.y)
+    (bodies[a].position.x <= rec2.x + rec2.width && bodies[a].position.x >= rec2.x)  || 
+    (bodies[a].position.y <= rec2.y + rec2.height && bodies[a].position.y >= rec2.y)
     )
   {
     //Rect Collision 
@@ -392,7 +435,7 @@ void PhysicWorld::SRCollision(int a, int b)
     //Vector2 Un = cCorner - bodies[a].position;
     Vector2 Un = Vector2Normalize(off);
     //From Ut, simply rotate 90 degrees
-    Vector2 Ut = Vector2Rotate(Un, PI/2);
+    Vector2 Ut = {Un.y, -Un.x};
 
     //Now, let's project our speeds in the new base
     float ua = Vector2DotProduct(Un, bodies[a].velocity);
@@ -609,6 +652,7 @@ bool PhysicWorld::Raycast(Vector2 o, Vector2 dir,int layer ,Vector2 &closest)
   bool as_found = false;
   for(int i = 0; i<bodies.size(); i++)
   {
+    
     if(bodies[i].collider.shape == SHAPE_REC)
     {
       //Create four lines, for the corners 

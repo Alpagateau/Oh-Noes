@@ -3,6 +3,16 @@
 
 void LuaSetup(sol::state* lua)
 {
+
+  
+  (*lua).open_libraries(
+    sol::lib::base, 
+    sol::lib::package,
+    sol::lib::string,
+    sol::lib::math,
+    sol::lib::table
+  ); 
+
   (*lua).script(R"(
 KeyCodes = {
     KEY_NULL            = 0,        -- Key: NULL, used for no key pressed

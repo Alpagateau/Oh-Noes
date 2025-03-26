@@ -70,7 +70,11 @@ public:
   Rigidbody* Subscribe(Rigidbody);
   Rigidbody* NewBall(Vector2 position, float r, float m, float Cr);
   Rigidbody* NewRec(Vector2 position, Vector2 r, float m, float Cr);
+
+  Rigidbody* focus;
+  float causality = 100;
   
+  void Compile();
   void Lua2Cpp();
   void Cpp2Lua();
   void Update(float dt);

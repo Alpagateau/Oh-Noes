@@ -9,6 +9,7 @@ end
 
 function Player.update(me, dt)
   local dir = 0
+  local b = 0
   if IsKeyDown(KeyCodes.KEY_RIGHT) then
     dir = dir + 1
   end

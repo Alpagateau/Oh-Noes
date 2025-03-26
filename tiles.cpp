@@ -60,10 +60,12 @@ int tiles::draw(tilemap &tm, tileset &ts, int maxX, int maxY, int minX, int minY
     float nposx = (t.posx + tm.posx)*tm.scale;
     float nposy = (t.posy + tm.posy)*tm.scale;
     float s = tm.scale;
+
     if(nposx >= maxX || nposy >= maxY)
       continue; 
     if((nposx+s) <= minX || (nposy+s) <= minY)
       continue;
+
     int rat = (int)(ts.width/ts.twidth);
     int tposx = (int)t.val % rat;
     int tposy = (int)(t.val - tposx) / rat;
