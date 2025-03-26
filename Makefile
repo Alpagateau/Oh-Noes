@@ -12,7 +12,7 @@ linux: tiles.o main.o physics.o tiler.o
 	g++ tiler.o tiles.o -o tiler-linux               $(OPTS) $(LIBS) $(LIB_DIR_LINUX) $(IDIR)
 
 windows: *.cpp
-	x86_64-w64-mingw32-g++ *.cpp -o main-win $(IDIR) $(LIB_DIR_WIN) $(LIBS) $(WIN_FLAGS) $(OPTS)
+	x86_64-w64-mingw32-g++ main.cpp tiles.cpp physics.cpp -o main-win $(IDIR) $(LIB_DIR_WIN) $(LIBS) $(WIN_FLAGS) $(OPTS)
 	x86_64_w64-mingw32-g++ tiler.cpp -o tiler-linux $(OPTS) $(LIBS) $(LIB_DIR_WIN) $(IDIR) $(WIN_FLAGS)
 	cp /home/martin/LIBS/lua/win/lua54.dll ./
 
