@@ -1,0 +1,29 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+    },
+    "last.exportedFilePath": "/home/martin/Documents/projects/ONAPBTIAWATH/res",
+    "last.imagePath": "/home/martin/Documents/projects/ONAPBTIAWATH/res",
+    "map.fixedSize": false,
+    "map.lastUsedExportFilter": "Lua files (*.lua)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+    ],
+    "project": "the_level.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
