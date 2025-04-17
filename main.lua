@@ -1,67 +1,50 @@
 
-
 function love.load()
-
   love.graphics.setDefaultFilter("nearest", "nearest")
+  --Importing all libraries
   sti = require 'libs/sti'
-  gameMap = sti('SecondTry.lua')
+  gameMap = sti('res/level_one.lua')
   camera_lib  = require('libs/camera')
-  wf = require('libs/windfield/windfield') 
+  love.graphics.setBackgroundColor(99/255, 124/255, 143/255)
+  wf = require('libs/windfield/windfield')
 
 -- Prepare physics world with horizontal and vertical gravity
-	World = wf.newWorld(0,9)
+	World = wf.newWorld(0,200)
 
-  Player = {}
-  Player.collider = World:newBSGRectangleCollider(0, 0, 16, 32, 3)
-  Player.collider:setFixedRotation(true)
-  Player.x = 0
-  Player.y = 0
-  Player.speed = 1
-  Player.sprite = love.graphics.newImage("res/Prota.png")
-
+  require("scripts.player")
   camera = camera_lib()
-  camera.scale = 2
+  camera.scale = 3
+
+  --Adding collisions
+  if gameMap.layers["Ground"] then
+    for i,obj in pairs(gameMap.layers["Ground"].objects) do
+      local grnd = World:newRectangleCollider(obj.x, obj.y, obj.width, obj.height)
+      grnd:setType('static')
+    end
+  end
 end
 
 function love.update(dt)
-  local isMoving = false
-
-  local vx = 0
-  local vy = 9
-
-  if love.keyboard.isDown("right") then
-    vx = Player.speed
-  --player.anim = player.animations.right
-    isMoving = true
-  end
-
-  if love.keyboard.isDown("left") then
-    vx = - Player.speed
-  --player.anim = player.animations.left
-    isMoving = true
-  end
-
-  if love.keyboard.isDown("down") then
-    vy = Player.speed
-  --player.anim = player.animations.down
-    isMoving = true
-  end
-
-  if love.keyboard.isDown("up") then
-    vy =  -Player.speed
-    isMoving = true
-  end
-  Player.collider:setLinearVelocity(vx, vy)
-
   World:update(dt)
-
+  Player.update(dt)
   camera:lookAt(Player.x, Player.y)
 end
 
 function love.draw()
+
   camera:attach()
+
+  gameMap:drawLayer(gameMap.layers["Parralax"])
   gameMap:drawLayer(gameMap.layers["Tile Layer 1"])
-  love.graphics.draw(Player.sprite, Player.x, Player.y)
+  --gameMap:draw()
+  Player.draw()
   World:draw()
   camera:detach()
+  love.graphics.print("Grounded: " .. tostring(Player.isGrounded), 10, 10)
+end
+
+function love.keypressed(key)
+  if key == "up" then
+    Player.jump()
+  end
 end
