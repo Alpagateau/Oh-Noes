@@ -7,6 +7,7 @@ extends CharacterBody2D
 @export var TURNACC:float = 15
 @export var JUMP_VELOCITY = 400.0
 @export var LIFT:float = 300
+@export var AIRACC:float = 50.0
 var speed:float = 0
 
 func _physics_process(delta: float) -> void:
@@ -23,15 +24,24 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction:
-		speed += direction * ACCEL * delta
-		if sign(speed) != sign(direction):
-			speed += TURNACC * delta * direction
-		if abs(speed) >= MAXSPEED:
-			speed = MAXSPEED * sign(speed)
-		velocity.x = speed
+	if is_on_floor():
+		if direction:
+			speed += direction * ACCEL * delta
+			if sign(speed) != sign(direction):
+				speed += TURNACC * delta * direction
+			if abs(speed) >= MAXSPEED:
+				speed = MAXSPEED * sign(speed)
+			velocity.x = speed
+		else:
+			speed = move_toward(speed, 0, delta*ACCEL*DRAG)
+			velocity.x = speed
 	else:
-		speed = move_toward(speed, 0, delta*ACCEL*DRAG)
-		velocity.x = speed
+		if direction:
+			speed += direction * AIRACC * delta
+			if sign(speed) != sign(direction):
+				speed += TURNACC * delta * direction
+			if abs(speed) >= MAXSPEED:
+				speed = MAXSPEED * sign(speed)
+			velocity.x = speed
 
 	move_and_slide()

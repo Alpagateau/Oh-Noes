@@ -15,8 +15,9 @@ collision_enabled = false
 position = Vector2(0, -22)
 ACCEL = 1000.0
 TURNACC = 250.0
-JUMP_VELOCITY = 200.0
-LIFT = 600.0
+JUMP_VELOCITY = 180.0
+LIFT = 500.0
+AIRACC = 500.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(6, -12)
