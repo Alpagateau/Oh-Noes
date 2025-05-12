@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://8wpsoodctncb"]
+
+[ext_resource type="Script" uid="uid://cinhvr73ae84j" path="res://Scripts/coin_particle.gd" id="1_ljeja"]
+
+[sub_resource type="Curve" id="Curve_m73mi"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.903409, 0.932584), 0.0, 0.0, 0, 0, Vector2(0.994318, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="CoinPart" type="CPUParticles2D"]
+emitting = false
+amount = 50
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 120.0
+damping_min = 29.668
+damping_max = 49.495
+scale_amount_curve = SubResource("Curve_m73mi")
+color = Color(0.890196, 0.847059, 0, 1)
+script = ExtResource("1_ljeja")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.488
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

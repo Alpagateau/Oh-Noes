@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://buha05i1pnpng"]
+
+[ext_resource type="Script" uid="uid://dvhfvn1sj770p" path="res://Scripts/dash.gd" id="1_tkrbt"]
+[ext_resource type="PackedScene" uid="uid://8wpsoodctncb" path="res://Scenes/CoinParticle.tscn" id="2_1opu0"]
+[ext_resource type="AudioStream" uid="uid://b253o72cmwkv7" path="res://Sound Effect/hitHurt.wav" id="2_72560"]
+[ext_resource type="AudioStream" uid="uid://bacgri3libf1k" path="res://Sound Effect/pickupCoin.wav" id="3_1opu0"]
+
+[node name="Dash" type="Node2D" node_paths=PackedStringArray("DASH_TIMER", "DASH_COOLDOWN", "DASH_PARTICLES", "DASH_SOUND", "CHAINED_DASH_SOUND", "GRACE_TIMER")]
+script = ExtResource("1_tkrbt")
+DASH_SPEED = 300
+DASH_TIMER = NodePath("Timers/Dash Timer")
+DASH_COOLDOWN = NodePath("Timers/Dash Cooldown")
+DASH_PARTICLES = NodePath("CPUParticles2D")
+DASH_SOUND = NodePath("DashSound")
+CHAINED_DASH_SOUND = NodePath("ChainedDashSound")
+GRACE_TIMER = NodePath("Timers/Grace")
+coin_part = ExtResource("2_1opu0")
+is_physics = true
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="Dash Cooldown" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="Dash Timer" type="Timer" parent="Timers"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Grace" type="Timer" parent="Timers"]
+wait_time = 0.2
+one_shot = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(0, -5)
+emitting = false
+amount = 14
+lifetime = 0.1
+one_shot = true
+explosiveness = 0.22
+direction = Vector2(-1, 0)
+spread = 8.64
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.51
+initial_velocity_max = 202.02
+linear_accel_min = -46.46
+linear_accel_max = -46.46
+damping_max = 35.354
+
+[node name="DashSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_72560")
+volume_db = -3.0
+
+[node name="ChainedDashSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_1opu0")
+volume_db = -3.0
+
+[connection signal="timeout" from="Timers/Dash Timer" to="." method="_on_dash_timer_timeout"]

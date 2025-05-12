@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://ixktsy4055jd"]
+
+[ext_resource type="Script" uid="uid://dda250ioi8gxm" path="res://Scripts/juming.gd" id="1_v21px"]
+[ext_resource type="AudioStream" uid="uid://cek4ra6vcf7s1" path="res://Sound Effect/jump.wav" id="2_gjqb3"]
+
+[node name="Jump" type="Node2D" node_paths=PackedStringArray("buffer_timer", "coyote_timer")]
+script = ExtResource("1_v21px")
+jump_force = 250.0
+downward_accel = 123
+buffer_timer = NodePath("Buffer")
+coyote_timer = NodePath("CoyoteTime")
+
+[node name="CoyoteTime" type="Timer" parent="."]
+one_shot = true
+
+[node name="Buffer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_gjqb3")
+
+[connection signal="timeout" from="CoyoteTime" to="." method="_on_coyote_time_timeout"]

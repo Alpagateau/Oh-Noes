@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1g473tkrecg1"]
+
+[ext_resource type="Script" uid="uid://yikgc22g4wl4" path="res://Scripts/gravity.gd" id="1_eivcu"]
+
+[node name="Gravity" type="Node"]
+script = ExtResource("1_eivcu")
+is_physics = true

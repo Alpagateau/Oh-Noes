@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://dp0t6snp4icxl"]
+
+[ext_resource type="Script" uid="uid://cnausfdn80laj" path="res://Scripts/wall_jump.gd" id="1_f02b3"]
+[ext_resource type="AudioStream" uid="uid://cek4ra6vcf7s1" path="res://Sound Effect/jump.wav" id="2_evuyx"]
+
+[node name="Wall Jump" type="Node2D" node_paths=PackedStringArray("buffer_timer", "coyote_timer")]
+script = ExtResource("1_f02b3")
+bounce = 500.0
+buffer_timer = NodePath("Buffer")
+coyote_timer = NodePath("CoyoteTime")
+
+[node name="CoyoteTime" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="Buffer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_evuyx")
+
+[node name="PostJump" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[connection signal="timeout" from="CoyoteTime" to="." method="_on_coyote_time_timeout"]
+[connection signal="timeout" from="PostJump" to="." method="_on_post_jump_timeout"]
