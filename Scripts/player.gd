@@ -28,9 +28,17 @@ func populate():
 		if a.enabled:
 			a.start()
 
-func get_ability(name:String):
-	if abilities.size() == 0:
-		populate()
+func deactivate(ab:String):
 	for a in abilities:
-		if a.name == name:
+		if a.name == ab:
+			a.enabled = false
+
+func activate(ab:String):
+	for a in abilities:
+		if a.name == ab:
+			a.enabled = true
+
+func get_ability(ab:String):
+	for a in abilities:
+		if a.name == ab:
 			return a

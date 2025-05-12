@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://cb8hx4hbcgkvf"]
+[gd_scene load_steps=13 format=4 uid="uid://cb8hx4hbcgkvf"]
 
 [ext_resource type="TileSet" uid="uid://bcmdrpnyr1jbe" path="res://tilemap.tres" id="1_8j60k"]
 [ext_resource type="PackedScene" uid="uid://b3k88t2gjkwl6" path="res://Scenes/player.tscn" id="2_fo5ed"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ixktsy4055jd" path="res://Scenes/Abilities/juming.tscn" id="6_ikia7"]
 [ext_resource type="PackedScene" uid="uid://dp0t6snp4icxl" path="res://Scenes/Abilities/wall_jump.tscn" id="7_5v1tr"]
 [ext_resource type="PackedScene" uid="uid://cv6wa1pb7uxue" path="res://Scenes/Abilities/air_control.tscn" id="8_0fj1v"]
+[ext_resource type="PackedScene" uid="uid://bh6dpc8v1urjt" path="res://Scenes/Abilities/wall_grip.tscn" id="9_7yui6"]
 [ext_resource type="Script" uid="uid://dclvu0qy2gtq" path="res://Scenes/test_effect.gd" id="11_ikia7"]
 
 [node name="World" type="Node2D"]
@@ -44,13 +45,17 @@ is_physics = true
 is_physics = true
 
 [node name="Wall Jump" parent="Player" instance=ExtResource("7_5v1tr")]
-bounce = 200.0
+bounce = 150.0
 is_physics = true
 
 [node name="Air Control" parent="Player" instance=ExtResource("8_0fj1v")]
 speed = 125.0
 accel = 250.0
 turn = 250.0
+is_physics = true
+
+[node name="Wall Grip" parent="Player" instance=ExtResource("9_7yui6")]
+gripping_speed = 1000.0
 is_physics = true
 
 [node name="Coins" type="Node" parent="."]
