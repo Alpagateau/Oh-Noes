@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bh6dpc8v1urjt"]
 
-[ext_resource type="Script" uid="uid://co8trj47maymq" path="res://wall_grip.gd" id="1_ah6f7"]
+[ext_resource type="Script" uid="uid://co8trj47maymq" path="res://Scripts/wall_grip.gd" id="1_ah6f7"]
 
 [node name="Wall Grip" type="Node2D"]
 script = ExtResource("1_ah6f7")

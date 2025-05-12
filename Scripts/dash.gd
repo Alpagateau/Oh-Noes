@@ -69,7 +69,6 @@ func dash() -> void:
 	DASH_PARTICLES.direction = -dash_dir
 	dashing = true
 	DASH_PARTICLES.emitting = true
-	player.ANIMATOR.play("Dash")
 	DASH_TIMER.start()
 	DASH_COOLDOWN.start()
 	move.enabled = false

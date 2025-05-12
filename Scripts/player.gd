@@ -8,6 +8,12 @@ func _ready() -> void:
 	populate()
 
 func _process(delta: float) -> void:
+	if not is_on_floor():
+		if velocity.y > 0:
+			ANIMATOR.play("Fall")
+		else:
+			ANIMATOR.play("Jump")
+	
 	for a in abilities:
 		if !a.is_physics && a.enabled:
 			a.update(delta)

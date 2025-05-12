@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bcmdrpnyr1jbe"]
 
-[ext_resource type="Texture2D" uid="uid://dr31hpbgf5mtj" path="res://Textures/tilemap0.1.png" id="1_q3qn3"]
+[ext_resource type="Texture2D" uid="uid://bfwuik833a3sc" path="res://Textures/tilemap1.png" id="1_q3qn3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aqk2v"]
 texture = ExtResource("1_q3qn3")
@@ -26,6 +26,7 @@ texture = ExtResource("1_q3qn3")
 2:3/0 = 0
 2:4/0 = 0
 7:7/0 = 0
+6:7/0 = 0
 
 [resource]
 physics_layer_0/collision_layer = 1

@@ -19,7 +19,8 @@ func update(delta: float) -> void:
 			if abs(player.velocity.x) > speed: 
 				player.velocity.x = speed * sign(player.velocity.x)
 			
-			player.ANIMATOR.play("Walk")
+			if player.is_on_floor():
+				player.ANIMATOR.play("Walk")
 			player.ANIMATOR.flip_h = direction < 0
 		else:
 			player.velocity.x = move_toward(player.velocity.x, 0, turn)
