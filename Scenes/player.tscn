@@ -84,7 +84,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x3wgy"]
 radius = 4.0
-height = 18.0
+height = 16.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -97,5 +97,5 @@ animation = &"Walk"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(0, -8)
 shape = SubResource("CapsuleShape2D_x3wgy")
