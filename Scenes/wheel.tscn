@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnvey37qymb5q"]
+
+[ext_resource type="Script" uid="uid://dnh1qj6gjkryg" path="res://Scenes/wheel.gd" id="1_y7iat"]
+[ext_resource type="FontFile" uid="uid://8avxfapp8euj" path="res://upheavtt.ttf" id="2_u5up5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jc6qf"]
+font = ExtResource("2_u5up5")
+font_size = 11
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+
+[node name="Wheel" type="Node2D" node_paths=PackedStringArray("fxs")]
+script = ExtResource("1_y7iat")
+fxs = [null, null, null, null]
+font_settings = SubResource("LabelSettings_jc6qf")

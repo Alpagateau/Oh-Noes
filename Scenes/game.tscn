@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://bv5ct6raq3iu2"]
+
+[ext_resource type="PackedScene" uid="uid://cb8hx4hbcgkvf" path="res://Scenes/world.tscn" id="1_ebmjs"]
+[ext_resource type="PackedScene" uid="uid://di8ddy0a06y5l" path="res://Scenes/effect_manager.tscn" id="2_wrm1d"]
+[ext_resource type="Script" uid="uid://dclvu0qy2gtq" path="res://Scenes/test_effect.gd" id="3_3dryh"]
+[ext_resource type="PackedScene" uid="uid://bnvey37qymb5q" path="res://Scenes/wheel.tscn" id="4_3dryh"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Wheel" parent="." node_paths=PackedStringArray("fxs") instance=ExtResource("4_3dryh")]
+position = Vector2(-24, -16)
+fxs = [NodePath("../Effect_Manager/TestEffect"), NodePath("../Effect_Manager/TestEffect6"), NodePath("../Effect_Manager/TestEffect5"), NodePath("../Effect_Manager/TestEffect4"), NodePath("../Effect_Manager/TestEffect3"), NodePath("../Effect_Manager/TestEffect2")]
+colors = Array[Color]([Color(1, 0, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 1, 1), Color(1, 1, 0, 1)])
+radius = 90.0
+
+[node name="World" parent="." instance=ExtResource("1_ebmjs")]
+
+[node name="Effect_Manager" parent="." node_paths=PackedStringArray("World") instance=ExtResource("2_wrm1d")]
+World = NodePath("../World")
+
+[node name="TestEffect2" type="Node" parent="Effect_Manager"]
+script = ExtResource("3_3dryh")
+tile = Vector2i(1, 0)
+enabled = false
+
+[node name="TestEffect3" type="Node" parent="Effect_Manager"]
+script = ExtResource("3_3dryh")
+tile = Vector2i(0, 1)
+enabled = false
+
+[node name="TestEffect4" type="Node" parent="Effect_Manager"]
+script = ExtResource("3_3dryh")
+enabled = false
+
+[node name="TestEffect5" type="Node" parent="Effect_Manager"]
+script = ExtResource("3_3dryh")
+enabled = false
+
+[node name="TestEffect6" type="Node" parent="Effect_Manager"]
+script = ExtResource("3_3dryh")
+enabled = false
+
+[node name="TestEffect" type="Node" parent="Effect_Manager"]
+script = ExtResource("3_3dryh")
+enabled = false

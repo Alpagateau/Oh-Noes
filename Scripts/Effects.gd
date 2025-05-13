@@ -3,6 +3,8 @@ class_name Effect extends Node
 @export var is_physics:bool
 @export var enabled:bool = true
 
+@export var title:String
+
 var player:PlayerController
 var tilemap:TileMapLayer
 var world:Node2D

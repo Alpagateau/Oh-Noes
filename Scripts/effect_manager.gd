@@ -26,8 +26,8 @@ func populate():
 			effects.append(child)
 			
 	for a in effects:
-		a.player = Player 
-		a.tilemap = Tilemap
+		a.player = World.Player  
+		a.tilemap = World.Tilemap
 		a.world = World
 		if a.enabled:
 			a.start()
