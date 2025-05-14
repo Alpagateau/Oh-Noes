@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c72gru42geuco"]
+
+[ext_resource type="Script" uid="uid://cdoe4g2df7572" path="res://Scripts/a_effect.gd" id="1_1ujgx"]
+
+[node name="AEffect" type="Node"]
+script = ExtResource("1_1ujgx")

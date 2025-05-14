@@ -2,45 +2,24 @@
 
 [ext_resource type="PackedScene" uid="uid://cb8hx4hbcgkvf" path="res://Scenes/world.tscn" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://di8ddy0a06y5l" path="res://Scenes/effect_manager.tscn" id="2_wrm1d"]
-[ext_resource type="Script" uid="uid://dclvu0qy2gtq" path="res://Scenes/test_effect.gd" id="3_3dryh"]
-[ext_resource type="PackedScene" uid="uid://bnvey37qymb5q" path="res://Scenes/wheel.tscn" id="4_3dryh"]
+[ext_resource type="Script" uid="uid://c3ajouj5c11yc" path="res://Scripts/ReloadArea.gd" id="3_wrm1d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxrlw"]
+size = Vector2(32, 48)
 
 [node name="Game" type="Node2D"]
-
-[node name="Wheel" parent="." node_paths=PackedStringArray("fxs") instance=ExtResource("4_3dryh")]
-position = Vector2(24, -80)
-rotation = 65.0431
-fxs = [NodePath("../Effect_Manager/TestEffect"), NodePath("../Effect_Manager/TestEffect6"), NodePath("../Effect_Manager/TestEffect5"), NodePath("../Effect_Manager/TestEffect4"), NodePath("../Effect_Manager/TestEffect3"), NodePath("../Effect_Manager/TestEffect2")]
-radius = 90.0
 
 [node name="World" parent="." instance=ExtResource("1_ebmjs")]
 
 [node name="Effect_Manager" parent="." node_paths=PackedStringArray("World") instance=ExtResource("2_wrm1d")]
 World = NodePath("../World")
 
-[node name="TestEffect2" type="Node" parent="Effect_Manager"]
-script = ExtResource("3_3dryh")
-tile = Vector2i(1, 0)
-enabled = false
-title = "NO GREEN"
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(1184, -120)
+collision_mask = 2
+script = ExtResource("3_wrm1d")
 
-[node name="TestEffect3" type="Node" parent="Effect_Manager"]
-script = ExtResource("3_3dryh")
-tile = Vector2i(0, 1)
-enabled = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_qxrlw")
 
-[node name="TestEffect4" type="Node" parent="Effect_Manager"]
-script = ExtResource("3_3dryh")
-enabled = false
-
-[node name="TestEffect5" type="Node" parent="Effect_Manager"]
-script = ExtResource("3_3dryh")
-enabled = false
-
-[node name="TestEffect6" type="Node" parent="Effect_Manager"]
-script = ExtResource("3_3dryh")
-enabled = false
-
-[node name="TestEffect" type="Node" parent="Effect_Manager"]
-script = ExtResource("3_3dryh")
-enabled = false
+[connection signal="area_entered" from="Area2D" to="Area2D" method="_on_area_entered"]

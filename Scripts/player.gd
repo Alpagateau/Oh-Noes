@@ -44,6 +44,9 @@ func activate(ab:String):
 		if a.name == ab:
 			a.enabled = true
 
+func get_random_ab() -> String:
+	return abilities[randi_range(0, len(abilities)-1)].name
+
 func get_ability(ab:String):
 	for a in abilities:
 		if a.name == ab:
