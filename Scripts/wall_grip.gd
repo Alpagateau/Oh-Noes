@@ -3,7 +3,13 @@ extends Ability
 var gripped:bool = false
 var gripped_x:float = 0
 
+var dsh:Ability
+
 @export var gripping_speed:float = 0
+
+func start() -> void:
+	super.start()
+	dsh = player.get_ability("Dash")
 
 var norm:Vector2
 func update(delta:float) -> void:
@@ -31,6 +37,8 @@ func update(delta:float) -> void:
 		if dir * norm.x >= 0:
 			if $Timer.is_stopped():
 				$Timer.start()
+		if dsh != null:
+			dsh.dash_remaining = dsh.DASH_COUNT
 	pass
 
 func _on_timer_timeout() -> void:

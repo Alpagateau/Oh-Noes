@@ -5,12 +5,18 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_jc6qf"]
 font = ExtResource("2_u5up5")
-font_size = 11
+font_size = 22
 outline_size = 3
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
 
 [node name="Wheel" type="Node2D" node_paths=PackedStringArray("fxs")]
+rotation = 336.877
 script = ExtResource("1_y7iat")
-fxs = [null, null, null, null]
+fxs = [null, null, null, null, null, null]
+colors = Array[Color]([Color(1, 0, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 1, 1), Color(1, 1, 0, 1)])
+radius = 50.0
 font_settings = SubResource("LabelSettings_jc6qf")
+min_speed = 2.0
+max_speed = 10.0
+deccel = 0.5
