@@ -20,6 +20,7 @@ var speed:float = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	generate()
+	launch()
 
 func generate():
 	print("Generating")
