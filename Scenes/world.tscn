@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://cb8hx4hbcgkvf"]
+[gd_scene load_steps=13 format=4 uid="uid://cb8hx4hbcgkvf"]
 
 [ext_resource type="Script" uid="uid://c2q1xwg356ee6" path="res://Scripts/world.gd" id="1_7yui6"]
 [ext_resource type="TileSet" uid="uid://bcmdrpnyr1jbe" path="res://tilemap.tres" id="1_8j60k"]
@@ -13,10 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://bh6dpc8v1urjt" path="res://Scenes/Abilities/wall_grip.tscn" id="9_7yui6"]
 [ext_resource type="PackedScene" uid="uid://d1e4q4chlii2v" path="res://Scenes/Abilities/camera_controller.tscn" id="10_c5t2i"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7yui6"]
-radius = 3.0
-height = 6.0
-
 [node name="World" type="Node2D" node_paths=PackedStringArray("Player", "Tilemap")]
 script = ExtResource("1_7yui6")
 Player = NodePath("Player")
@@ -29,8 +25,6 @@ tile_set = ExtResource("1_8j60k")
 [node name="Player" parent="." instance=ExtResource("2_fo5ed")]
 
 [node name="Dash" parent="Player" instance=ExtResource("3_k7acu")]
-crouch_collider = SubResource("CapsuleShape2D_7yui6")
-crouch_collider_pos = Vector2(0, -9)
 
 [node name="Gravity" parent="Player" instance=ExtResource("4_5v1tr")]
 

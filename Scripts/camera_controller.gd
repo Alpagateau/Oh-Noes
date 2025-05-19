@@ -20,6 +20,4 @@ func update(delta:float) -> void:
 	if cam.offset.length() >= max_dist:
 		#print("Too Long : ",cam.offset.length() )
 		cam.offset = cam.offset.normalized() * max_dist
-		
-	
 	pass

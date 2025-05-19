@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://2piumvxgrjy3"]
+
+[ext_resource type="Shader" uid="uid://uacvl606rdar" path="res://Shaders/shadow.gdshader" id="1_iad5i"]
+
+[resource]
+shader = ExtResource("1_iad5i")
+shader_parameter/tint_color = Vector4(1, 1, 1, 1)

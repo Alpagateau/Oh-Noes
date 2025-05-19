@@ -1,5 +1,6 @@
 extends Ability
 
+
 @export var DASH_SPEED = 200
 @export var DASH_COUNT = 3
 @export var DASH_TIMER:Timer
@@ -10,15 +11,15 @@ extends Ability
 @export var GRACE_TIMER:Timer
 
 @export var crouch:bool = true
-@export var crouch_collider:CapsuleShape2D
-@export var crouch_collider_pos:Vector2
+@export var crouch_collider_size:float = 0.3
 
 var collider:CollisionShape2D
-var normal_collider_pos:Vector2
-var normal_collider:CapsuleShape2D
 
 var current_coin:Node2D 
 @export var coin_part:PackedScene
+
+var shapeTween:Tween
+var posTween:Tween
 
 var dash_dir:Vector2
 var dashing:bool = false
@@ -26,6 +27,8 @@ var dash_remaining = 2
 var move:Ability
 var air:Ability
 var grav:Ability
+
+
 
 func start():
 	super.start()
@@ -36,8 +39,8 @@ func start():
 		if c is CollisionShape2D:
 			collider = c
 			break
-	normal_collider_pos = collider.position
-	normal_collider = collider.shape
+	player.ANIMATOR.animation
+	player.ANIMATOR.frame
 	
 #Either _process or _physics_process depending on the Is Physics value
 func update(delta: float) -> void:
@@ -46,7 +49,6 @@ func update(delta: float) -> void:
 			dash()
 		else:
 			$Timers/Buffer.start()
-	
 	if dashing:
 		player.velocity = dash_dir.normalized() * DASH_SPEED
 		if DASH_TIMER.is_stopped():
@@ -82,7 +84,7 @@ func dash() -> void:
 		
 	if dir != Vector2.ZERO:
 		dash_dir = dir
-	#print("Start Dash")
+	player.create_shadow(0.3)
 	DASH_SOUND.play()
 	DASH_PARTICLES.direction = -dash_dir
 	dashing = true
@@ -92,37 +94,14 @@ func dash() -> void:
 	move.enabled = false
 	grav.enabled = false
 	air.enabled = false
-	#collider.shape = crouch_collider
-	#collider.position = crouch_collider_pos
-	var posTween := create_tween()
-	posTween.set_trans(Tween.TRANS_LINEAR)
-	posTween.tween_property(
-		collider, "position", crouch_collider_pos, 0.03
-	)
-	var shapeTween := create_tween()
-	shapeTween.set_trans(Tween.TRANS_LINEAR)
-	shapeTween.tween_property(
-		collider, "shape", crouch_collider, 0.03
-	)
+	collider.scale.y = crouch_collider_size
 	
 func _on_dash_timer_timeout() -> void:
 	move.enabled = true
 	grav.enabled = true
 	air.enabled = true
-	collider.shape = normal_collider
-	#collider.position = normal_collider_pos
-	var posTween := create_tween()
-	posTween.set_trans(Tween.TRANS_LINEAR)
-	posTween.tween_property(
-		collider, "position", normal_collider_pos, 0.03
-	)
-	var shapeTween := create_tween()
-	shapeTween.set_trans(Tween.TRANS_LINEAR)
-	shapeTween.tween_property(
-		collider, "shape", normal_collider, 0.03
-	)
+	collider.scale.y = 1
 	pass # Replace with function body.
-
 
 func _on_buffer_timeout() -> void:
 	if !dashing:

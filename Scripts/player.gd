@@ -1,8 +1,11 @@
 class_name PlayerController extends CharacterBody2D
 # Nodes 
-@onready var ANIMATOR = $AnimatedSprite2D
+@onready var ANIMATOR:AnimatedSprite2D = $AnimatedSprite2D
 
 var abilities:Array[Ability]
+
+
+@export var shadowMaterial:ShaderMaterial
 
 func _ready() -> void:
 	populate()
@@ -48,3 +51,18 @@ func get_ability(ab:String):
 	for a in abilities:
 		if a.name == ab:
 			return a
+
+func create_shadow(duration:float):
+	var shadow:AnimatedSprite2D = ANIMATOR.duplicate()
+	shadow.stop()
+	shadow.autoplay = ""
+	shadow.position = ANIMATOR.global_position
+	shadow.z_index -= 1
+	var t:Timer = Timer.new()
+	t.one_shot = true
+	t.wait_time = duration
+	t.connect("timeout", func(): shadow.queue_free())
+	shadow.add_child(t)
+	shadow.material = shadowMaterial
+	add_sibling(shadow)
+	t.start()
