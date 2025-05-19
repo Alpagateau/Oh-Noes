@@ -11,14 +11,18 @@ var can_jump:bool = true
 var was_grounded:bool = true
 
 var wall_grip:Ability
+var jump_ab:Ability
 
 func start() -> void:
 	super.start()
 	
 	wall_grip = player.get_ability("Wall Grip")
+	jump_ab = player.get_ability("Jump")
 	
 	if wall_grip == null:
 		print("Can't Wall Jump without Wall Grip")
+	if jump_ab == null:
+		print("No jump, it'll be hard to wall jump")
 
 func update(delta: float) -> void:
 	#Buffered jump
@@ -49,6 +53,8 @@ func jump():
 		wall_grip.gripped = false
 		player.velocity = new_vel
 		can_jump = false
+		if jump_ab:
+			jump_ab.can_jump = false
 		$JumpSound.play()
 		$PostJump.start()
 		player.get_ability("Air Control").enabled = false
@@ -59,9 +65,7 @@ func jump():
 
 func _on_coyote_time_timeout() -> void:
 	can_jump = false
-	pass # Replace with function body.
 
 func _on_post_jump_timeout() -> void:
 	player.get_ability("Air Control").enabled = true
 	wall_grip.enabled = true
-	pass # Replace with function body.

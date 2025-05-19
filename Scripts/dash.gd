@@ -10,12 +10,12 @@ extends Ability
 @export var GRACE_TIMER:Timer
 
 @export var crouch:bool = true
-@export var crouch_collider:Shape2D
+@export var crouch_collider:CapsuleShape2D
 @export var crouch_collider_pos:Vector2
 
 var collider:CollisionShape2D
 var normal_collider_pos:Vector2
-var normal_collider:Shape2D
+var normal_collider:CapsuleShape2D
 
 var current_coin:Node2D 
 @export var coin_part:PackedScene
@@ -42,9 +42,12 @@ func start():
 #Either _process or _physics_process depending on the Is Physics value
 func update(delta: float) -> void:
 	if  Input.is_action_just_pressed("Action2"):
-		dash()
+		if !dashing:
+			dash()
+		else:
+			$Timers/Buffer.start()
+	
 	if dashing:
-
 		player.velocity = dash_dir.normalized() * DASH_SPEED
 		if DASH_TIMER.is_stopped():
 			player.velocity.x /= 2
@@ -89,14 +92,39 @@ func dash() -> void:
 	move.enabled = false
 	grav.enabled = false
 	air.enabled = false
-	collider.shape = crouch_collider
-	collider.position = crouch_collider_pos
+	#collider.shape = crouch_collider
+	#collider.position = crouch_collider_pos
+	var posTween := create_tween()
+	posTween.set_trans(Tween.TRANS_LINEAR)
+	posTween.tween_property(
+		collider, "position", crouch_collider_pos, 0.03
+	)
+	var shapeTween := create_tween()
+	shapeTween.set_trans(Tween.TRANS_LINEAR)
+	shapeTween.tween_property(
+		collider, "shape", crouch_collider, 0.03
+	)
 	
-
 func _on_dash_timer_timeout() -> void:
 	move.enabled = true
 	grav.enabled = true
 	air.enabled = true
 	collider.shape = normal_collider
-	collider.position = normal_collider_pos
+	#collider.position = normal_collider_pos
+	var posTween := create_tween()
+	posTween.set_trans(Tween.TRANS_LINEAR)
+	posTween.tween_property(
+		collider, "position", normal_collider_pos, 0.03
+	)
+	var shapeTween := create_tween()
+	shapeTween.set_trans(Tween.TRANS_LINEAR)
+	shapeTween.tween_property(
+		collider, "shape", normal_collider, 0.03
+	)
+	pass # Replace with function body.
+
+
+func _on_buffer_timeout() -> void:
+	if !dashing:
+		dash()
 	pass # Replace with function body.

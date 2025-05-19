@@ -18,7 +18,7 @@ func update(delta:float) -> void:
 	cam.offset = cam.offset.lerp(lp + base_offset, delta * speed)
 	
 	if cam.offset.length() >= max_dist:
-		print("Too Long : ",cam.offset.length() )
+		#print("Too Long : ",cam.offset.length() )
 		cam.offset = cam.offset.normalized() * max_dist
 		
 	
