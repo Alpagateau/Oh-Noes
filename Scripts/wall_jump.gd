@@ -57,8 +57,8 @@ func jump():
 			jump_ab.can_jump = false
 		$JumpSound.play()
 		$PostJump.start()
-		player.get_ability("Air Control").enabled = false
-		wall_grip.enabled = false
+		player.get_ability("Air Control").lock(self)
+		wall_grip.lock(self)
 	else:
 		if !player.is_on_floor():
 			buffer_timer.start()
@@ -67,5 +67,5 @@ func _on_coyote_time_timeout() -> void:
 	can_jump = false
 
 func _on_post_jump_timeout() -> void:
-	player.get_ability("Air Control").enabled = true
-	wall_grip.enabled = true
+	player.get_ability("Air Control").unlock(self)
+	wall_grip.unlock(self)

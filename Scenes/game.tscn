@@ -12,7 +12,7 @@
 [node name="Wheel" parent="." node_paths=PackedStringArray("fxs") instance=ExtResource("4_3dryh")]
 visible = false
 position = Vector2(24, -80)
-rotation = 295.389
+rotation = 331.076
 fxs = [NodePath("../Effect_Manager/Enoch"), NodePath("../Effect_Manager/Gambelus"), NodePath("../Effect_Manager/Shell"), NodePath("../Effect_Manager/Lava"), NodePath("../Effect_Manager/No Jump"), NodePath("../Effect_Manager/No Dash")]
 radius = 70.0
 

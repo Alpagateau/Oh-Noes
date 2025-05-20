@@ -18,7 +18,7 @@ func update(delta:float) -> void:
 	if player.is_on_wall():
 		norm = player.get_wall_normal()
 		if !player.is_on_floor():
-			if dir * norm.x == -1:
+			if dir * norm.x <= -1:
 				if !gripped:
 					player.velocity.x = 0
 				gripped = true

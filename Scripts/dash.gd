@@ -18,17 +18,13 @@ var collider:CollisionShape2D
 var current_coin:Node2D 
 @export var coin_part:PackedScene
 
-var shapeTween:Tween
-var posTween:Tween
-
 var dash_dir:Vector2
+
 var dashing:bool = false
 var dash_remaining = 2
 var move:Ability
 var air:Ability
 var grav:Ability
-
-
 
 func start():
 	super.start()
@@ -44,22 +40,24 @@ func start():
 	
 #Either _process or _physics_process depending on the Is Physics value
 func update(delta: float) -> void:
+	
+	dashing = !DASH_TIMER.is_stopped()
 	if  Input.is_action_just_pressed("Action2"):
 		if !dashing:
 			dash()
 		else:
 			$Timers/Buffer.start()
 	if dashing:
-		player.velocity = dash_dir.normalized() * DASH_SPEED
-		if DASH_TIMER.is_stopped():
-			player.velocity.x /= 2
-			player.velocity.y /= 2
-			dashing = false
+		player.velocity = dash_dir
+		if player.velocity.length() < DASH_SPEED:
+			print("Wrong Speed here : ", player.velocity.length())
+			
 	else:
 		if player.is_on_floor():
 			dash_remaining = DASH_COUNT
 
 func dash() -> void:
+	print("Speed when dashing : ", player.velocity.length())
 	var dir = Vector2(
 		Input.get_axis("D-Left", "D-Right"), 
 		Input.get_axis("D-Up", "D-Down")
@@ -83,24 +81,32 @@ func dash() -> void:
 			add_sibling(prt)
 		
 	if dir != Vector2.ZERO:
-		dash_dir = dir
-	player.create_shadow(0.3)
+		dash_dir = dir.normalized() * DASH_SPEED
 	DASH_SOUND.play()
 	DASH_PARTICLES.direction = -dash_dir
-	dashing = true
 	DASH_PARTICLES.emitting = true
 	DASH_TIMER.start()
 	DASH_COOLDOWN.start()
-	move.enabled = false
-	grav.enabled = false
-	air.enabled = false
+	move.lock(self)
+	grav.lock(self)
+	air.lock(self)
+	var shapeTween = get_tree().create_tween()
+	shapeTween.tween_property(collider, "scale" ,Vector2(1, crouch_collider_size), 0.1)
+	print(shapeTween.is_valid())
 	collider.scale.y = crouch_collider_size
+	player.create_shadow(0.3)
 	
 func _on_dash_timer_timeout() -> void:
-	move.enabled = true
-	grav.enabled = true
-	air.enabled = true
-	collider.scale.y = 1
+	print("Player speed :", player.velocity.length())
+	move.unlock(self)
+	grav.unlock(self)
+	air.unlock(self)
+	#collider.scale.y = 1
+	var shapeTween = get_tree().create_tween()
+	shapeTween.tween_property(collider, "scale", Vector2.ONE, 0.1)
+	print(shapeTween.is_valid())
+	player.velocity.x /= 2
+	player.velocity.y /= 2
 	pass # Replace with function body.
 
 func _on_buffer_timeout() -> void:
