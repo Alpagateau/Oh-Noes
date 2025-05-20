@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0s0yb1106x0j"]
+
+[ext_resource type="PackedScene" uid="uid://bnvey37qymb5q" path="res://Scenes/wheel.tscn" id="1_jxero"]
+[ext_resource type="Texture2D" uid="uid://cltqlpha3oier" path="res://Textures/lone_tree_smol.png" id="2_qdvrb"]
+
+[node name="WheelLayout" type="CanvasLayer"]
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Control" type="PanelContainer" parent="Control2"]
+modulate = Color(1, 1, 1, 0.392157)
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 160.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Wheel" parent="." instance=ExtResource("1_jxero")]
+position = Vector2(120, 160)
+rotation = 67.8333
+
+[node name="LoneTreeSmol" type="Sprite2D" parent="."]
+position = Vector2(112, 32)
+rotation = -3.14159
+scale = Vector2(0.266473, 0.973576)
+texture = ExtResource("2_qdvrb")

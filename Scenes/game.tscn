@@ -3,18 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://cb8hx4hbcgkvf" path="res://Scenes/world.tscn" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://di8ddy0a06y5l" path="res://Scenes/effect_manager.tscn" id="2_wrm1d"]
 [ext_resource type="Script" uid="uid://dclvu0qy2gtq" path="res://Scenes/test_effect.gd" id="3_3dryh"]
-[ext_resource type="PackedScene" uid="uid://bnvey37qymb5q" path="res://Scenes/wheel.tscn" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://c0s0yb1106x0j" path="res://Scenes/ui.tscn" id="5_wowpa"]
 
 [node name="Game" type="Node2D"]
 
 [node name="World" parent="." instance=ExtResource("1_ebmjs")]
-
-[node name="Wheel" parent="." node_paths=PackedStringArray("fxs") instance=ExtResource("4_3dryh")]
-visible = false
-position = Vector2(24, -80)
-rotation = 331.076
-fxs = [NodePath("../Effect_Manager/Enoch"), NodePath("../Effect_Manager/Gambelus"), NodePath("../Effect_Manager/Shell"), NodePath("../Effect_Manager/Lava"), NodePath("../Effect_Manager/No Jump"), NodePath("../Effect_Manager/No Dash")]
-radius = 70.0
 
 [node name="Effect_Manager" parent="." node_paths=PackedStringArray("World") instance=ExtResource("2_wrm1d")]
 World = NodePath("../World")
@@ -45,3 +38,5 @@ enabled = false
 [node name="Enoch" type="Node" parent="Effect_Manager"]
 script = ExtResource("3_3dryh")
 enabled = false
+
+[node name="UI" parent="." instance=ExtResource("5_wowpa")]

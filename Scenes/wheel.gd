@@ -10,6 +10,8 @@ extends Node2D
 @export var max_speed:float = 3
 @export var deccel:float = 2
 
+@export var mat:Material
+
 @export_category("Debug")
 @export_tool_button("Generate Wheel") var gen = self.generate
 @export_tool_button("Rotate Wheel") var rot = self.launch
@@ -41,6 +43,7 @@ func generate():
 		vertex.append(Vector2(0, 0))
 		new_quarter.polygon = vertex
 		new_quarter.color = colors[i%len(colors)]
+		new_quarter.material = mat
 		#new_quarter.position = position
 		
 		
