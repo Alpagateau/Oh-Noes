@@ -85,7 +85,7 @@ Action2={
 
 [physics]
 
-2d/default_gravity=500.0
+2d/default_gravity=600.0
 
 [rendering]
 

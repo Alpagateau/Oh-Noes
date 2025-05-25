@@ -4,7 +4,6 @@ class_name PlayerController extends CharacterBody2D
 
 var abilities:Array[Ability]
 
-
 @export var shadowMaterial:ShaderMaterial
 
 func _ready() -> void:

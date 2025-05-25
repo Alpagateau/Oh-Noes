@@ -10,6 +10,8 @@ extends Ability
 var can_jump:bool = true
 var was_grounded:bool = true
 
+signal start_jumping
+
 func update(delta: float) -> void:
 	#Buffered jump
 	if player.is_on_floor():

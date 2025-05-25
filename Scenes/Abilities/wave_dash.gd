@@ -1,0 +1,31 @@
+extends Ability
+
+var dash:Ability
+var jmp:Ability
+
+var waving:bool = false
+
+func start() -> void:
+	super.start()
+	dash = player.get_ability("Dash")
+	jmp = player.get_ability("Jump")
+	dash.stop_dashing.connect(_stopped_dashing)
+
+func update(delta:float) -> void:
+	if Input.is_action_just_pressed("Action"):
+		if dash.dashing:
+			$Timer.start()
+	pass
+
+func _stopped_dashing():
+	#print("Stopped Dashing")
+	if not $Timer.is_stopped():
+		if player.is_on_floor():
+			player.velocity = Vector2.ZERO
+			jmp.jump()
+			player.velocity *= 3
+
+func _on_timer_timeout() -> void:
+	waving = false
+	#print("Wave Finished")
+	pass # Replace with function body.

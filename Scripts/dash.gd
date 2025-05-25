@@ -1,6 +1,5 @@
 extends Ability
 
-
 @export var DASH_SPEED = 200
 @export var DASH_COUNT = 3
 @export var DASH_TIMER:Timer
@@ -26,6 +25,9 @@ var move:Ability
 var air:Ability
 var grav:Ability
 
+signal start_dashing 
+signal stop_dashing
+
 func start():
 	super.start()
 	move = player.get_ability("Moving")
@@ -50,14 +52,15 @@ func update(delta: float) -> void:
 	if dashing:
 		player.velocity = dash_dir
 		if player.velocity.length() < DASH_SPEED:
-			print("Wrong Speed here : ", player.velocity.length())
+			pass
+			#print("Wrong Speed here : ", player.velocity.length())
 			
 	else:
 		if player.is_on_floor():
 			dash_remaining = DASH_COUNT
 
 func dash() -> void:
-	print("Speed when dashing : ", player.velocity.length())
+	#print("Speed when dashing : ", player.velocity.length())
 	var dir = Vector2(
 		Input.get_axis("D-Left", "D-Right"), 
 		Input.get_axis("D-Up", "D-Down")
@@ -92,21 +95,23 @@ func dash() -> void:
 	air.lock(self)
 	var shapeTween = get_tree().create_tween()
 	shapeTween.tween_property(collider, "scale" ,Vector2(1, crouch_collider_size), 0.1)
-	print(shapeTween.is_valid())
+	#print(shapeTween.is_valid())
 	collider.scale.y = crouch_collider_size
 	player.create_shadow(0.3)
+	start_dashing.emit()
 	
 func _on_dash_timer_timeout() -> void:
-	print("Player speed :", player.velocity.length())
+	#print("Player speed :", player.velocity.length())
 	move.unlock(self)
 	grav.unlock(self)
 	air.unlock(self)
 	#collider.scale.y = 1
 	var shapeTween = get_tree().create_tween()
 	shapeTween.tween_property(collider, "scale", Vector2.ONE, 0.1)
-	print(shapeTween.is_valid())
+	#print(shapeTween.is_valid())
 	player.velocity.x /= 2
 	player.velocity.y /= 2
+	stop_dashing.emit()
 	pass # Replace with function body.
 
 func _on_buffer_timeout() -> void:
