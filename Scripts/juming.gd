@@ -4,20 +4,29 @@ extends Ability
 @export var downward_accel = 1
 @export var buffer_timer:Timer 
 @export var coyote_timer:Timer
+@export var long_jump_factor:float = 15
 
 @export var jump_divider:float = 4
 
 var can_jump:bool = true
 var was_grounded:bool = true
+var dsh:Ability
 
 signal start_jumping
 
+func start():
+	super.start()
+	dsh = player.get_ability("Dash")
+
 func update(delta: float) -> void:
 	#Buffered jump
+	if not enabled:
+		return 
+	
 	if player.is_on_floor():
 		can_jump = true
 		if !buffer_timer.is_stopped():
-			jump()
+			jump(true)
 	else:
 		if player.velocity.y > 0:
 			player.velocity.y += delta * downward_accel
@@ -30,12 +39,21 @@ func update(delta: float) -> void:
 				player.velocity.y /= jump_divider
 	
 	if Input.is_action_just_pressed("Action"):
-		jump()
+		jump(true)
 	was_grounded = player.is_on_floor()
 	
-func jump():
+func jump(wvdsh:bool):
 	if can_jump:
 		buffer_timer.stop()
+		if dsh && wvdsh:
+			if dsh.dashing:
+				if abs(player.velocity.x) > 0.2:
+					dsh.dashing = false
+					dsh.DASH_TIMER.stop()
+					dsh._on_dash_timer_timeout()
+					var d = sign(player.velocity.x)
+					player.velocity.x = dsh.DASH_SPEED * d * long_jump_factor
+					print("Wave dash")
 		player.velocity.y = -jump_force
 		can_jump = false
 		$JumpSound.play()

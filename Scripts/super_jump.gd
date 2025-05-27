@@ -23,9 +23,10 @@ func _stopped_dashing():
 	#print("Stopped Dashing")
 	if not $Timer.is_stopped():
 		if player.is_on_floor():
-			player.velocity = Vector2.ZERO
-			jmp.jump()
-			player.velocity *= 3
+			if abs(player.velocity.x) < 0.2:
+				player.velocity = Vector2.ZERO
+				jmp.jump(false)
+				player.velocity *= 1.7
 
 func _on_timer_timeout() -> void:
 	waving = false

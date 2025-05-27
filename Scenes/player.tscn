@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b3k88t2gjkwl6"]
+[gd_scene load_steps=15 format=3 uid="uid://b3k88t2gjkwl6"]
 
 [ext_resource type="Material" uid="uid://2piumvxgrjy3" path="res://Shaders/shadow.tres" id="1_6t5aa"]
 [ext_resource type="Script" uid="uid://cchh4he2enwm8" path="res://Scripts/player.gd" id="1_onrkg"]
@@ -87,6 +87,9 @@ animations = [{
 radius = 4.0
 height = 18.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6t5aa"]
+radius = 4.0
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 3
@@ -104,3 +107,8 @@ autoplay = "Idle"
 [node name="Main" type="CollisionShape2D" parent="."]
 position = Vector2(0, -9)
 shape = SubResource("CapsuleShape2D_x3wgy")
+
+[node name="Second" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_6t5aa")
+disabled = true

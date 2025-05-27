@@ -13,6 +13,7 @@ extends Ability
 @export var crouch_collider_size:float = 0.3
 
 var collider:CollisionShape2D
+var dash_collider:CollisionShape2D
 
 var current_coin:Node2D 
 @export var coin_part:PackedScene
@@ -54,8 +55,6 @@ func update(delta: float) -> void:
 		player.velocity = dash_dir
 		if player.velocity.length() < DASH_SPEED:
 			pass
-			#print("Wrong Speed here : ", player.velocity.length())
-			
 	else:
 		if player.is_on_floor():
 			dash_remaining = DASH_COUNT

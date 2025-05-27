@@ -55,6 +55,7 @@ visible = false
 [node name="Player" parent="." instance=ExtResource("5_rfjv2")]
 
 [node name="Dash" parent="Player" instance=ExtResource("6_1phco")]
+DASH_COUNT = 1
 
 [node name="Gravity" parent="Player" instance=ExtResource("7_nb51f")]
 
@@ -99,4 +100,3 @@ drag_bottom_margin = 0.08
 editor_draw_drag_margin = true
 
 [node name="Super Jump" parent="Player" instance=ExtResource("14_1phco")]
-enabled = false
