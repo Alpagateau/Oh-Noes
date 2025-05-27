@@ -53,7 +53,7 @@ func jump(wvdsh:bool):
 					dsh._on_dash_timer_timeout()
 					var d = sign(player.velocity.x)
 					player.velocity.x = dsh.DASH_SPEED * d * long_jump_factor
-					print("Wave dash")
+					dsh.dash_remaining += 1
 		player.velocity.y = -jump_force
 		can_jump = false
 		$JumpSound.play()

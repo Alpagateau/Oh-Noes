@@ -27,6 +27,7 @@ func _stopped_dashing():
 				player.velocity = Vector2.ZERO
 				jmp.jump(false)
 				player.velocity *= 1.7
+				
 
 func _on_timer_timeout() -> void:
 	waving = false
