@@ -42,7 +42,8 @@ func start():
 	
 #Either _process or _physics_process depending on the Is Physics value
 func update(delta: float) -> void:
-	
+	if not enabled:
+		return
 	dashing = !DASH_TIMER.is_stopped()
 	if  Input.is_action_just_pressed("Action2"):
 		if !dashing:
@@ -61,10 +62,12 @@ func update(delta: float) -> void:
 
 func dash() -> void:
 	#print("Speed when dashing : ", player.velocity.length())
-	var dir = Vector2(
+	var dir = clamp_dir(Vector2(
 		Input.get_axis("D-Left", "D-Right"), 
 		Input.get_axis("D-Up", "D-Down")
 		)
+		)
+	
 	if GRACE_TIMER.is_stopped():
 		if dir == Vector2(0, 0):
 			return
@@ -113,6 +116,21 @@ func _on_dash_timer_timeout() -> void:
 	player.velocity.y /= 2
 	stop_dashing.emit()
 	pass # Replace with function body.
+
+func clamp_dir(odir:Vector2) -> Vector2:
+	var lim:float = 0.5
+	var output:Vector2 = Vector2.ONE 
+	
+	if abs(odir.x) > lim:
+		output.x *= sign(odir.x)
+	else:
+		output.x = 0
+	
+	if abs(odir.y) > lim:
+		output.y *= sign(odir.y)
+	else:
+		output.y = 0
+	return output
 
 func _on_buffer_timeout() -> void:
 	if !dashing:

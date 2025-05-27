@@ -12,7 +12,10 @@ func start() -> void:
 	dsh = player.get_ability("Dash")
 
 var norm:Vector2
+
 func update(delta:float) -> void:
+	if not enabled:
+		return
 	var dir:float = Input.get_axis("D-Left", "D-Right")
 	
 	if player.is_on_wall():

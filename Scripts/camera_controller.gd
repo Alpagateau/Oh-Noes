@@ -13,6 +13,8 @@ func start() -> void:
 	base_offset = cam.offset
 	
 func update(delta:float) -> void:
+	if not enabled:
+		return
 	#print(cam.offset, player.velocity)
 	var lp:Vector2 = player.velocity * look_ahead
 	cam.offset = cam.offset.lerp(lp + base_offset, delta * speed)

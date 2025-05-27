@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://fjokpkdv48i1"]
 
-[ext_resource type="Script" uid="uid://bvyrrmw7tdsv4" path="res://Scenes/Abilities/wave_dash.gd" id="1_hqcu3"]
+[ext_resource type="Script" uid="uid://bvyrrmw7tdsv4" path="res://Scripts/super_jump.gd" id="1_hqcu3"]
 
 [node name="Wave Dash" type="Node2D"]
 script = ExtResource("1_hqcu3")

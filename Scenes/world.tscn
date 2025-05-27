@@ -5,9 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://ctktm4lttleco" path="res://Scenes/coin.tscn" id="3_5ukr8"]
 [ext_resource type="Texture2D" uid="uid://dqp067bvo3b4x" path="res://Textures/lone_tree_blocky.png" id="13_c5t2i"]
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("Player", "Tilemap")]
+[node name="World" type="Node2D" node_paths=PackedStringArray("Tilemap")]
 script = ExtResource("1_7yui6")
-Player = NodePath("")
 Tilemap = NodePath("TileMapLayer")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]

@@ -15,7 +15,6 @@ var jump_ab:Ability
 
 func start() -> void:
 	super.start()
-	
 	wall_grip = player.get_ability("Wall Grip")
 	jump_ab = player.get_ability("Jump")
 	
@@ -25,6 +24,8 @@ func start() -> void:
 		print("No jump, it'll be hard to wall jump")
 
 func update(delta: float) -> void:
+	if not enabled:
+		return
 	#Buffered jump
 	if wall_grip.gripped:
 		can_jump = !player.is_on_floor()

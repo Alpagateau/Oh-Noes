@@ -12,6 +12,8 @@ func start() -> void:
 	dash.stop_dashing.connect(_stopped_dashing)
 
 func update(delta:float) -> void:
+	if not enabled:
+		return
 	if Input.is_action_just_pressed("Action"):
 		if dash.dashing:
 			$Timer.start()

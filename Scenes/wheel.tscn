@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bnvey37qymb5q"]
 
-[ext_resource type="Script" uid="uid://dnh1qj6gjkryg" path="res://Scenes/wheel.gd" id="1_y7iat"]
+[ext_resource type="Script" uid="uid://dnh1qj6gjkryg" path="res://Scripts/wheel.gd" id="1_y7iat"]
 [ext_resource type="FontFile" uid="uid://8avxfapp8euj" path="res://upheavtt.ttf" id="2_u5up5"]
 [ext_resource type="Shader" uid="uid://t2oost16mpxo" path="res://Shaders/wheel.gdshader" id="3_jc6qf"]
 

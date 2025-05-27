@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cb8hx4hbcgkvf" path="res://Scenes/world.tscn" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://di8ddy0a06y5l" path="res://Scenes/effect_manager.tscn" id="2_wrm1d"]
-[ext_resource type="Script" uid="uid://dclvu0qy2gtq" path="res://Scenes/test_effect.gd" id="3_3dryh"]
+[ext_resource type="Script" uid="uid://dclvu0qy2gtq" path="res://Scripts/test_effect.gd" id="3_3dryh"]
 [ext_resource type="PackedScene" uid="uid://b3k88t2gjkwl6" path="res://Scenes/player.tscn" id="5_rfjv2"]
 [ext_resource type="PackedScene" uid="uid://c0s0yb1106x0j" path="res://Scenes/ui.tscn" id="5_wowpa"]
 [ext_resource type="PackedScene" uid="uid://buha05i1pnpng" path="res://Scenes/Abilities/dash.tscn" id="6_1phco"]
@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cv6wa1pb7uxue" path="res://Scenes/Abilities/air_control.tscn" id="11_iivbl"]
 [ext_resource type="PackedScene" uid="uid://bh6dpc8v1urjt" path="res://Scenes/Abilities/wall_grip.tscn" id="12_7nbq1"]
 [ext_resource type="PackedScene" uid="uid://d1e4q4chlii2v" path="res://Scenes/Abilities/camera_controller.tscn" id="13_exi56"]
-[ext_resource type="PackedScene" uid="uid://fjokpkdv48i1" path="res://Scenes/Abilities/wave_dash.tscn" id="14_1phco"]
+[ext_resource type="PackedScene" uid="uid://fjokpkdv48i1" path="res://Scenes/Abilities/super_jump.tscn" id="14_1phco"]
 
 [node name="Game" type="Node2D"]
 
@@ -98,4 +98,5 @@ drag_right_margin = 0.03
 drag_bottom_margin = 0.08
 editor_draw_drag_margin = true
 
-[node name="Wave Dash" parent="Player" instance=ExtResource("14_1phco")]
+[node name="Super Jump" parent="Player" instance=ExtResource("14_1phco")]
+enabled = false

@@ -4,7 +4,6 @@ class_name Ability extends Node
 @export var enabled:bool = true
 
 var player:PlayerController
-
 var locks:Array[String] = []
 
 func lock(caller):
@@ -23,9 +22,13 @@ func unlock(caller):
 
 func start() -> void:
 	player = get_parent()
+	if not enabled:
+		return
 	pass 
 
 func update(delta: float) -> void:
+	if enabled == false:
+		return
 	pass 
 
 func activate() -> void:

@@ -17,12 +17,12 @@ func _process(delta: float) -> void:
 			ANIMATOR.play("Jump")
 	
 	for a in abilities:
-		if !a.is_physics && a.enabled:
+		if !a.is_physics:
 			a.update(delta)
 
 func _physics_process(delta: float) -> void:
 	for a in abilities:
-		if a.is_physics && a.enabled:
+		if a.is_physics:
 			a.update(delta)
 	move_and_slide()
 

@@ -7,6 +7,8 @@ extends Ability
 var target_vel:float = 0
 
 func update(delta: float) -> void:
+	if not enabled:
+		return
 	if player.is_on_floor():
 		var direction := Input.get_axis("D-Left", "D-Right")
 		if direction:
