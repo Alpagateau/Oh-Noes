@@ -32,7 +32,7 @@ func populate():
 			effects.append(child)
 			
 	for a in effects:
-		a.player = World.Player  
+		a.player = World.Player 
 		a.tilemap = World.Tilemap
 		a.world = World
 		if a.enabled:
@@ -66,8 +66,8 @@ func command_disable_effect(element:String):
 func command_restart_level():
 	var nworld = start_world.duplicate()
 	Player.reload()
-	World.queue_free()
-	World.add_sibling(nworld)
+	World.call_deferred("queue_free")
+	World.call_deferred("add_sibling",nworld)
 	World = nworld
 	populate()
 	pass

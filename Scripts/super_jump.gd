@@ -9,7 +9,8 @@ func start() -> void:
 	super.start()
 	dash = player.get_ability("Dash")
 	jmp = player.get_ability("Jump")
-	dash.stop_dashing.connect(_stopped_dashing)
+	if ! dash.stop_dashing.is_connected(_stopped_dashing):
+		dash.stop_dashing.connect(_stopped_dashing)
 
 func update(delta:float) -> void:
 	if not enabled:

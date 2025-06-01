@@ -23,3 +23,10 @@ func update(delta:float) -> void:
 		#print("Too Long : ",cam.offset.length() )
 		cam.offset = cam.offset.normalized() * max_dist
 	pass
+	
+func reset():
+	cam.reset_smoothing()
+	cam.offset = Vector2.ZERO
+	print(cam.get_target_position())
+	print(cam.global_position)
+	pass

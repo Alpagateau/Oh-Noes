@@ -3,6 +3,7 @@ class_name PlayerController extends CharacterBody2D
 @onready var ANIMATOR:AnimatedSprite2D = $AnimatedSprite2D
 
 var abilities:Array[Ability]
+var enables:Array[bool]
 
 @export var shadowMaterial:ShaderMaterial
 
@@ -12,6 +13,7 @@ var start_pos:Vector2
 var start_vel:Vector2
 
 func _ready() -> void:
+	enables = []
 	populate()
 	start_pos = position
 	start_vel = velocity
@@ -24,24 +26,29 @@ func _process(delta: float) -> void:
 			ANIMATOR.play("Jump")
 	
 	for a in abilities:
-		if !a.is_physics:
+		if !a.is_physics && a.enabled:
 			a.update(delta)
 
 func _physics_process(delta: float) -> void:
 	for a in abilities:
-		if a.is_physics:
+		if a.is_physics && a.enabled:
 			a.update(delta)
 	move_and_slide()
 
 func populate():
+	var isempt = (enables == [])
 	abilities = []
 	for child in get_children():
 		if child is Ability:
 			abilities.append(child)
 	
-	for a in abilities:
-		if a.enabled:
-			a.start()
+	for a in len(abilities):
+		if isempt:
+			enables.append(abilities[a].enabled)
+		else:
+			abilities[a].enabled = enables[a]
+		if abilities[a].enabled:
+			abilities[a].start()
 
 func deactivate(ab:String):
 	for a in abilities:
@@ -80,4 +87,6 @@ func create_shadow(duration:float):
 func reload():
 	position = start_pos
 	velocity = start_vel
+	get_ability("CameraController").reset()
+	print(position)
 	populate()

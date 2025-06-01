@@ -38,8 +38,8 @@ func start():
 		if c is CollisionShape2D:
 			collider = c
 			break
-	player.ANIMATOR.animation
-	player.ANIMATOR.frame
+	#player.ANIMATOR.animation
+	#player.ANIMATOR.frame
 	
 #Either _process or _physics_process depending on the Is Physics value
 func update(delta: float) -> void:

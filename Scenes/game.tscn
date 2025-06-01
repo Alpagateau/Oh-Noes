@@ -1,9 +1,10 @@
-[gd_scene load_steps=20 format=4 uid="uid://bv5ct6raq3iu2"]
+[gd_scene load_steps=22 format=4 uid="uid://bv5ct6raq3iu2"]
 
 [ext_resource type="PackedScene" uid="uid://cb8hx4hbcgkvf" path="res://Scenes/world.tscn" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://di8ddy0a06y5l" path="res://Scenes/effect_manager.tscn" id="2_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://rxlpaq36j60d" path="res://Scenes/Effects/add_tiles.tscn" id="3_nnt18"]
 [ext_resource type="TileSet" uid="uid://bcmdrpnyr1jbe" path="res://tilemap.tres" id="4_ewbju"]
+[ext_resource type="PackedScene" uid="uid://fd7r2ov7v7ac" path="res://Scenes/set_ability.tscn" id="5_iivbl"]
 [ext_resource type="PackedScene" uid="uid://b3k88t2gjkwl6" path="res://Scenes/player.tscn" id="5_rfjv2"]
 [ext_resource type="PackedScene" uid="uid://c0s0yb1106x0j" path="res://Scenes/ui.tscn" id="5_wowpa"]
 [ext_resource type="PackedScene" uid="uid://buha05i1pnpng" path="res://Scenes/Abilities/dash.tscn" id="6_1phco"]
@@ -18,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://fjokpkdv48i1" path="res://Scenes/Abilities/super_jump.tscn" id="14_1phco"]
 [ext_resource type="Texture2D" uid="uid://c7wh8hpaaqlhf" path="res://Textures/bg2.png" id="17_ewbju"]
 [ext_resource type="Texture2D" uid="uid://b31fm1u7y2vlu" path="res://Textures/bg1.png" id="18_85qyi"]
+[ext_resource type="PackedScene" uid="uid://bbvigejcpqida" path="res://Scenes/end_trigger.tscn" id="20_7nbq1"]
 
 [sub_resource type="Environment" id="Environment_85qyi"]
 background_mode = 3
@@ -25,7 +27,8 @@ background_energy_multiplier = 1.24
 
 [node name="Game" type="Node2D"]
 
-[node name="World" parent="." instance=ExtResource("1_ebmjs")]
+[node name="World" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("1_ebmjs")]
+Player = NodePath("../Player")
 
 [node name="Effect_Manager" parent="." node_paths=PackedStringArray("Player", "World") instance=ExtResource("2_wrm1d")]
 Player = NodePath("../Player")
@@ -35,13 +38,27 @@ World = NodePath("../World")
 enabled = false
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Effect_Manager/AddTiles"]
+visible = false
 tile_map_data = PackedByteArray("AAD3/wAAAAAAAAAAAAD4/wAAAAABAAAAAAD5/wAAAAACAAAAAAD5/wEAAAABAAIAAAD3/wEAAAACAAIAAAD4/wEAAAABAAEAAAAJAPv/AAAAAAcAAAAJAPr/AAAAAAcAAAAKAPr/AAAAAAcAAAALAPr/AAAAAAcAAAAMAPr/AAAAAAcAAAANAPr/AAAAAAcAAAAOAPr/AAAAAAcAAAAPAPr/AAAAAAcAAAAQAPr/AAAAAAcAAAARAPr/AAAAAAcAAAASAPr/AAAAAAcAAAAKAPv/AAAAAAcAAAALAPv/AAAAAAcAAAAMAPv/AAAAAAcAAAANAPv/AAAAAAcAAAAOAPv/AAAAAAcAAAAPAPv/AAAAAAcAAAAQAPv/AAAAAAcAAAARAPv/AAAAAAcAAAASAPv/AAAAAAcAAAATAAAAAAAAAAcAAAATAP//AAAAAAcAAAATAP7/AAAAAAcAAAATAP3/AAAAAAcAAAATAPz/AAAAAAcAAAATAPv/AAAAAAcAAAATAPr/AAAAAAcAAAAUAPr/AAAAAAcAAAAUAPv/AAAAAAcAAAAUAPz/AAAAAAcAAAAUAP3/AAAAAAcAAAAUAP7/AAAAAAcAAAAUAP//AAAAAAcAAAAUAAAAAAAAAAcAAAASAAAAAAAAAAcAAAASAP//AAAAAAcAAAASAP7/AAAAAAcAAAASAP3/AAAAAAcAAAASAPz/AAAAAAcAAAACAAAAAAABAAAAAAADAAAAAAACAAAAAAAEAAAAAAAAAAEAAAADAAEAAAABAAIAAAAEAAEAAAACAAIAAAAFAAEAAAACAAEAAAA=")
 tile_set = ExtResource("4_ewbju")
+
+[node name="damn" parent="Effect_Manager" instance=ExtResource("3_nnt18")]
+enabled = false
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Effect_Manager/damn"]
+visible = false
+tile_map_data = PackedByteArray("AAACAAAAAAAAAAcAAAADAAAAAAAAAAcAAAAEAAAAAAAAAAcAAAADAAEAAAAAAAcAAAAEAAEAAAAAAAcAAAAFAAEAAAAAAAcAAAD6/wQAAAAAAAcAAAD7/wQAAAAAAAcAAAD8/wQAAAAAAAcAAAD9/wQAAAAAAAcAAAD+/wQAAAAAAAcAAAD//wQAAAAAAAcAAAAAAAQAAAAAAAcAAAABAAQAAAAAAAcAAAACAAQAAAAAAAcAAAADAAQAAAAAAAcAAAAEAAQAAAAAAAcAAAD5/wQAAAAAAAcAAAD4/wQAAAAAAAcAAAD3/wQAAAAAAAcAAAD2/wQAAAAAAAcAAAAFAAQAAAAAAAcAAAAGAAQAAAAAAAcAAAAHAAQAAAAAAAcAAAAIAAQAAAAAAAcAAAD4/wMAAAAAAAcAAAD5/wMAAAAAAAcAAAD6/wMAAAAAAAcAAAD7/wMAAAAAAAcAAAD8/wMAAAAAAAcAAAD9/wMAAAAAAAcAAAD+/wMAAAAAAAcAAAD//wMAAAAAAAcAAAAAAAMAAAAAAAcAAAABAAMAAAAAAAcAAAACAAMAAAAAAAcAAAADAAMAAAAAAAcAAAAEAAMAAAAAAAcAAAAFAAMAAAAAAAcAAAAGAAMAAAAAAAcAAAAHAAMAAAAAAAcAAAAIAAMAAAAAAAcAAAAJAAMAAAAAAAcAAAD6/wAAAAAAAAcAAAD6/wEAAAAAAAcAAAD6/wIAAAAAAAcAAAD7/wIAAAAAAAcAAAD7/wEAAAAAAAcAAAD7/wAAAAAAAAcAAAD8/wAAAAAAAAcAAAD8/wEAAAAAAAcAAAD8/wIAAAAAAAcAAAD9/wIAAAAAAAcAAAD9/wEAAAAAAAcAAAD9/wAAAAAAAAcAAAD+/wIAAAAAAAcAAAD+/wEAAAAAAAcAAAD+/wAAAAAAAAEAAAD//wIAAAAAAAcAAAAAAAIAAAAAAAcAAAAAAAEAAAAAAAcAAAD//wEAAAAAAAcAAAABAAIAAAAAAAcAAAACAAIAAAAAAAcAAAABAAEAAAAAAAcAAAABAAAAAAAAAAEAAAACAAEAAAAAAAcAAAADAAIAAAAAAAcAAAAEAAIAAAAAAAcAAAAFAAAAAAAAAAcAAAAFAAIAAAAAAAcAAAAGAAEAAAAAAAcAAAAGAAAAAAAAAAcAAAAGAAIAAAAAAAcAAAD+////AAAAAAEAAAD+//7/AAAAAAEAAAABAP//AAACAAEAAAABAP7/AAACAAEAAAD+//3/AAAAAAAAAAD///3/AAABAAAAAAABAP3/AAACAAAAAAAAAP3/AAABAAAAAAA=")
+tile_set = ExtResource("4_ewbju")
+
+[node name="SetAbility" parent="Effect_Manager" instance=ExtResource("5_iivbl")]
+AbilityName = "Dash"
+enabled = false
 
 [node name="UI" parent="." instance=ExtResource("5_wowpa")]
 visible = false
 
 [node name="Player" parent="." instance=ExtResource("5_rfjv2")]
+position = Vector2(-432, 0)
 shadowPrefab = ExtResource("6_nb51f")
 
 [node name="Dash" parent="Player" instance=ExtResource("6_1phco")]
@@ -116,3 +133,7 @@ texture = ExtResource("18_85qyi")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_85qyi")
+
+[node name="EndTrigger" parent="." node_paths=PackedStringArray("efx_manager") instance=ExtResource("20_7nbq1")]
+position = Vector2(1240, -656)
+efx_manager = NodePath("../Effect_Manager")

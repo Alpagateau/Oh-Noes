@@ -31,4 +31,4 @@ func start() -> void:
 			tilemap.set_cell(p,i,coo)
 		print(p, i)
 	
-	layer.queue_free()
+	#layer.queue_free()
