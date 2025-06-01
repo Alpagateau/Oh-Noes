@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://vbuoi5nhuhd7"]
+
+[ext_resource type="Texture2D" uid="uid://bnxjq36rwh4ov" path="res://Textures/dash_spritesheet_2.png" id="1_wjdoq"]
+
+[sub_resource type="Gradient" id="Gradient_8pobm"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.317647, 1, 1, 1, 0)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Shadow" type="CPUParticles2D" parent="."]
+position = Vector2(0, 4)
+emitting = false
+amount = 1
+texture = ExtResource("1_wjdoq")
+lifetime = 3.0
+one_shot = true
+gravity = Vector2(0, 0)
+color = Color(0.619608, 0.329412, 0.462745, 1)
+color_ramp = SubResource("Gradient_8pobm")

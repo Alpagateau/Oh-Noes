@@ -6,6 +6,8 @@ var abilities:Array[Ability]
 
 @export var shadowMaterial:ShaderMaterial
 
+@export var shadowPrefab:PackedScene
+
 func _ready() -> void:
 	populate()
 
@@ -52,9 +54,13 @@ func get_ability(ab:String):
 			return a
 
 func create_shadow(duration:float):
-	var shadow:AnimatedSprite2D = ANIMATOR.duplicate()
-	shadow.stop()
-	shadow.autoplay = ""
+	#var shadow:AnimatedSprite2D = ANIMATOR.duplicate()
+	var shadow = shadowPrefab.instantiate()
+	var part:CPUParticles2D = shadow.get_child(0)
+	part.lifetime = duration
+	part.emitting = true
+	#shadow.stop()
+	#shadow.autoplay = ""
 	shadow.position = ANIMATOR.global_position
 	shadow.z_index -= 1
 	var t:Timer = Timer.new()
@@ -62,6 +68,6 @@ func create_shadow(duration:float):
 	t.wait_time = duration
 	t.connect("timeout", func(): shadow.queue_free())
 	shadow.add_child(t)
-	shadow.material = shadowMaterial
+	#shadow.material = shadowMaterial
 	add_sibling(shadow)
 	t.start()

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://rxlpaq36j60d"]
+
+[ext_resource type="Script" uid="uid://btxuvcddjxdpq" path="res://Scenes/Effects/add_tiles.gd" id="1_v0dve"]
+
+[node name="AddTiles" type="Node2D"]
+script = ExtResource("1_v0dve")

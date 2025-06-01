@@ -90,3 +90,4 @@ Action2={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.752941, 0.898039, 0.952941, 1)

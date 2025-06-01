@@ -4,4 +4,4 @@
 
 [resource]
 shader = ExtResource("1_iad5i")
-shader_parameter/tint_color = Vector4(1, 1, 1, 0.5)
+shader_parameter/tint_color = Vector4(0.62, 0.33, 0.46, 1)
