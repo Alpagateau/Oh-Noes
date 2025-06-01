@@ -2,6 +2,8 @@ extends Effect
 var layer:TileMapLayer = null
 
 # Called when the node enters the scene tree for the first time.
+@export var eraseTile:Vector2i = Vector2i(0, 7)
+
 func _ready() -> void:
 	for child in get_children():
 		if child is TileMapLayer:
@@ -9,6 +11,10 @@ func _ready() -> void:
 			break
 	if layer == null:
 		push_error("This scene requires a TileMapLayer")
+	
+	layer.visible = false
+	layer.collision_enabled = false 
+	
 	pass # Replace with function body.
 
 func start() -> void:
@@ -17,5 +23,12 @@ func start() -> void:
 	print("Debug 1")
 	for p in cs:
 		#adds the tile in the main tilemap 
-		tilemap.set_cell(p,-1,layer.get_cell_atlas_coords(p))
+		var i   := layer.get_cell_source_id(p)
+		var coo := layer.get_cell_atlas_coords(p)
+		if coo == eraseTile:
+			tilemap.set_cell(p, -1,Vector2i(-1, -1))
+		else:
+			tilemap.set_cell(p,i,coo)
+		print(p, i)
+	
 	layer.queue_free()

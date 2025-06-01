@@ -1,13 +1,19 @@
 extends Node
 
-@export var Player:CharacterBody2D
+@export var Player:PlayerController
 @export var Tilemap:TileMapLayer
 @export var World:Node2D
 
 var effects:Array[Effect]
+var start_world:Node2D
 
 func _ready() -> void:
 	populate()
+	Console.add_command("list_effects", command_list_effect)
+	Console.add_command("enable", command_enable_effect, ["effect"])
+	Console.add_command("disable", command_disable_effect, ["effect"])
+	Console.add_command("reload", command_restart_level)
+	start_world = World.duplicate()
 
 func _process(delta: float) -> void:
 	for a in effects:
@@ -38,3 +44,30 @@ func get_ability(name:String):
 	for a in effects:
 		if a.name == name:
 			return a
+
+func command_list_effect():
+	for e in effects:
+		Console.print_line(e.name)
+
+func command_enable_effect(element:String):
+	for e in effects:
+		if e.name == element:
+			e.enabled = true
+			return
+	Console.print_error("Not an effect")
+
+func command_disable_effect(element:String):
+	for e in effects:
+		if e.name == element:
+			e.enabled = false
+			return
+	Console.print_error("Not an effect")
+
+func command_restart_level():
+	var nworld = start_world.duplicate()
+	Player.reload()
+	World.queue_free()
+	World.add_sibling(nworld)
+	World = nworld
+	populate()
+	pass

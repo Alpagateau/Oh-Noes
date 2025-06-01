@@ -8,8 +8,13 @@ var abilities:Array[Ability]
 
 @export var shadowPrefab:PackedScene
 
+var start_pos:Vector2
+var start_vel:Vector2
+
 func _ready() -> void:
 	populate()
+	start_pos = position
+	start_vel = velocity
 
 func _process(delta: float) -> void:
 	if not is_on_floor():
@@ -71,3 +76,8 @@ func create_shadow(duration:float):
 	#shadow.material = shadowMaterial
 	add_sibling(shadow)
 	t.start()
+
+func reload():
+	position = start_pos
+	velocity = start_vel
+	populate()

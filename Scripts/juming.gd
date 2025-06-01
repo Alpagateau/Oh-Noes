@@ -48,6 +48,7 @@ func jump(wvdsh:bool):
 		if dsh && wvdsh:
 			if dsh.dashing:
 				if abs(player.velocity.x) > 0.2:
+					player.create_shadow(0.6)
 					dsh.dashing = false
 					dsh.DASH_TIMER.stop()
 					dsh._on_dash_timer_timeout()
