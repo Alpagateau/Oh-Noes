@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="platformer_playground"
+config/name="ohnoes_wheelgame"
 run/main_scene="uid://bv5ct6raq3iu2"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
