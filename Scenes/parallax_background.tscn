@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://kq2nvnhe27xp"]
+
+[ext_resource type="Texture2D" uid="uid://c7wh8hpaaqlhf" path="res://Textures/bg2.png" id="1_cthwu"]
+[ext_resource type="Texture2D" uid="uid://b31fm1u7y2vlu" path="res://Textures/bg1.png" id="2_cl21a"]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+scroll_ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+position = Vector2(0, -32)
+motion_scale = Vector2(0.2, 0.02)
+motion_mirroring = Vector2(288, 0)
+
+[node name="Bg2" type="Sprite2D" parent="ParallaxLayer"]
+position = Vector2(144, 96)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("1_cthwu")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+position = Vector2(0, -40)
+motion_scale = Vector2(0.3, 0.07)
+motion_mirroring = Vector2(288, 0)
+
+[node name="Bg2" type="Sprite2D" parent="ParallaxLayer2"]
+position = Vector2(144, 144)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_cl21a")
