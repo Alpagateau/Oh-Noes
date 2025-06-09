@@ -92,8 +92,13 @@ func generate():
 		
 		var mesh_instance := MeshInstance2D.new()
 		mesh_instance.mesh = mesh
-		mesh_instance.material = mat 
+		mesh_instance.material = mat.duplicate()
+		var shdr:Shader = mat.shader.duplicate()
+		shdr.set("tint_color", colors[i % len(colors)])
+		mesh_instance.material.set_shader_parameter("tint_color", colors[i % len(colors)])
 		mesh_instance.texture = tex
+		
+		#mesh_instance.color = colors[i % len(colors)]
 		var txt:Label = Label.new()
 		txt.label_settings = font_settings
 		txt.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT 
@@ -110,6 +115,7 @@ func generate():
 		add_child(mesh_instance)
 		mesh_instance.add_child(txt)
 		mesh_instance.rotation = i * dtheta
+		#mesh_instance.modulate = colors[i % len(colors)]
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

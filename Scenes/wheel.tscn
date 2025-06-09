@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bnvey37qymb5q"]
+[gd_scene load_steps=7 format=3 uid="uid://bnvey37qymb5q"]
 
 [ext_resource type="Script" uid="uid://dnh1qj6gjkryg" path="res://Scripts/wheel.gd" id="1_y7iat"]
 [ext_resource type="FontFile" uid="uid://8avxfapp8euj" path="res://upheavtt.ttf" id="2_u5up5"]
 [ext_resource type="Shader" uid="uid://t2oost16mpxo" path="res://Shaders/wheel.gdshader" id="3_jc6qf"]
+[ext_resource type="Texture2D" uid="uid://dowuu8bili8v3" path="res://Textures/tilemap2.png" id="4_lshy5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jc6qf"]
 font = ExtResource("2_u5up5")
@@ -13,9 +14,10 @@ shadow_size = 0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lshy5"]
 shader = ExtResource("3_jc6qf")
+shader_parameter/tint = Vector4(1, 0, 0, 1)
 
 [node name="Wheel" type="Node2D" node_paths=PackedStringArray("fxs")]
-rotation = 435.717
+rotation = 497.587
 script = ExtResource("1_y7iat")
 fxs = [null, null, null, null, null, null]
 colors = Array[Color]([Color(0.807447, 0.402272, 0.25448, 1), Color(0.344993, 0.97484, 0.385817, 1), Color(0.508907, 0.535778, 0.850497, 1), Color(0.902739, 0.626194, 0.862684, 1)])
@@ -25,3 +27,4 @@ min_speed = 2.0
 max_speed = 10.0
 deccel = 0.5
 mat = SubResource("ShaderMaterial_lshy5")
+tex = ExtResource("4_lshy5")

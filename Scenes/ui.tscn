@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0s0yb1106x0j"]
+[gd_scene load_steps=6 format=3 uid="uid://c0s0yb1106x0j"]
 
 [ext_resource type="PackedScene" uid="uid://bnvey37qymb5q" path="res://Scenes/wheel.tscn" id="1_jxero"]
-[ext_resource type="Texture2D" uid="uid://c7wh8hpaaqlhf" path="res://Textures/bg2.png" id="2_nf4gj"]
 [ext_resource type="Texture2D" uid="uid://cltqlpha3oier" path="res://Textures/lone_tree_smol.png" id="2_qdvrb"]
+[ext_resource type="Texture2D" uid="uid://dcote52r16ofj" path="res://Textures/wheel_border_too.png" id="3_q7pk6"]
+[ext_resource type="Shader" uid="uid://brkyfdnmhvxdp" path="res://Shaders/wheeel.gdshader" id="5_m78vo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q7pk6"]
+resource_local_to_scene = true
+shader = ExtResource("5_m78vo")
+shader_parameter/tint_color = Vector4(1, 1, 1, 1)
 
 [node name="WheelLayout" type="CanvasLayer"]
 
@@ -22,12 +28,14 @@ offset_bottom = 160.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Wheel" parent="." instance=ExtResource("1_jxero")]
+[node name="Wheel" parent="." node_paths=PackedStringArray("fxs") instance=ExtResource("1_jxero")]
 position = Vector2(120, 160)
-rotation = 94.1287
-colors = Array[Color]([Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)])
-Res = Vector2i(16, 20)
-tex = ExtResource("2_nf4gj")
+rotation = 441.414
+fxs = [null, null, null, null, null, null, null, null]
+colors = Array[Color]([Color(0.584314, 0.764706, 0.913725, 1), Color(0.752941, 0.898039, 0.952941, 1), Color(0.529412, 0.760784, 0.576471, 1), Color(0.698039, 0.858824, 0.627451, 1), Color(0.905882, 0.921569, 0.737255, 1), Color(0.901961, 0.811765, 0.631373, 1), Color(0.619608, 0.329412, 0.462745, 1), Color(0.741176, 0.443137, 0.509804, 1)])
+Res = Vector2i(10, 10)
+mat = SubResource("ShaderMaterial_q7pk6")
+tex = ExtResource("3_q7pk6")
 
 [node name="LoneTreeSmol" type="Sprite2D" parent="."]
 visible = false
