@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0s0yb1106x0j"]
+[gd_scene load_steps=4 format=3 uid="uid://c0s0yb1106x0j"]
 
 [ext_resource type="PackedScene" uid="uid://bnvey37qymb5q" path="res://Scenes/wheel.tscn" id="1_jxero"]
+[ext_resource type="Texture2D" uid="uid://c7wh8hpaaqlhf" path="res://Textures/bg2.png" id="2_nf4gj"]
 [ext_resource type="Texture2D" uid="uid://cltqlpha3oier" path="res://Textures/lone_tree_smol.png" id="2_qdvrb"]
 
 [node name="WheelLayout" type="CanvasLayer"]
@@ -23,9 +24,13 @@ size_flags_vertical = 3
 
 [node name="Wheel" parent="." instance=ExtResource("1_jxero")]
 position = Vector2(120, 160)
-rotation = 67.8333
+rotation = 94.1287
+colors = Array[Color]([Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)])
+Res = Vector2i(16, 20)
+tex = ExtResource("2_nf4gj")
 
 [node name="LoneTreeSmol" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(112, 32)
 rotation = -3.14159
 scale = Vector2(0.266473, 0.973576)
