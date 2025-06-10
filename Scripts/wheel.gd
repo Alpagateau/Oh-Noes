@@ -64,13 +64,6 @@ func generate():
 				var uv2 = Vector2(float(x+1) / cols, float(y+1) / rows)
 				var uv3 = Vector2(float(x) / cols,     float(y+1) / rows)
 				
-				# UVs: Stretch one texture across the full mesh
-				#var uv0 = Vector2(0,0)
-				#var uv1 = Vector2(1,0)
-				#var uv2 = Vector2(1,1)
-				#var uv3 = Vector2(0,1)
-
-			# First triangle (v0, v1, v2)
 				st.set_uv(uv0)
 				st.add_vertex(v0)
 				st.set_uv(uv1)

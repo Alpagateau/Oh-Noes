@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://bv5ct6raq3iu2"]
+[gd_scene load_steps=26 format=4 uid="uid://bv5ct6raq3iu2"]
 
 [ext_resource type="PackedScene" uid="uid://cb8hx4hbcgkvf" path="res://Scenes/world.tscn" id="1_ebmjs"]
 [ext_resource type="PackedScene" uid="uid://di8ddy0a06y5l" path="res://Scenes/effect_manager.tscn" id="2_wrm1d"]
@@ -6,12 +6,15 @@
 [ext_resource type="TileSet" uid="uid://bcmdrpnyr1jbe" path="res://tilemap.tres" id="4_ewbju"]
 [ext_resource type="PackedScene" uid="uid://fd7r2ov7v7ac" path="res://Scenes/set_ability.tscn" id="5_iivbl"]
 [ext_resource type="PackedScene" uid="uid://b3k88t2gjkwl6" path="res://Scenes/player.tscn" id="5_rfjv2"]
-[ext_resource type="PackedScene" uid="uid://c0s0yb1106x0j" path="res://Scenes/ui.tscn" id="5_wowpa"]
 [ext_resource type="PackedScene" uid="uid://buha05i1pnpng" path="res://Scenes/Abilities/dash.tscn" id="6_1phco"]
+[ext_resource type="PackedScene" uid="uid://bnvey37qymb5q" path="res://Scenes/wheel.tscn" id="6_mg4q0"]
 [ext_resource type="PackedScene" uid="uid://vbuoi5nhuhd7" path="res://Scenes/shadow.tscn" id="6_nb51f"]
 [ext_resource type="PackedScene" uid="uid://d1g473tkrecg1" path="res://Scenes/Abilities/gravity.tscn" id="7_nb51f"]
+[ext_resource type="Shader" uid="uid://brkyfdnmhvxdp" path="res://Shaders/wheeel.gdshader" id="7_vm72l"]
+[ext_resource type="Texture2D" uid="uid://ckkttmr82odea" path="res://Textures/wheel_border_tree.png" id="8_22asu"]
 [ext_resource type="PackedScene" uid="uid://b3kdayvpigjuf" path="res://Scenes/Abilities/moving.tscn" id="8_nnt18"]
 [ext_resource type="PackedScene" uid="uid://ixktsy4055jd" path="res://Scenes/Abilities/juming.tscn" id="9_ewbju"]
+[ext_resource type="Texture2D" uid="uid://cltqlpha3oier" path="res://Textures/lone_tree_smol.png" id="9_fkdbe"]
 [ext_resource type="PackedScene" uid="uid://dp0t6snp4icxl" path="res://Scenes/Abilities/wall_jump.tscn" id="10_85qyi"]
 [ext_resource type="PackedScene" uid="uid://cv6wa1pb7uxue" path="res://Scenes/Abilities/air_control.tscn" id="11_iivbl"]
 [ext_resource type="PackedScene" uid="uid://bh6dpc8v1urjt" path="res://Scenes/Abilities/wall_grip.tscn" id="12_7nbq1"]
@@ -19,6 +22,12 @@
 [ext_resource type="PackedScene" uid="uid://fjokpkdv48i1" path="res://Scenes/Abilities/super_jump.tscn" id="14_1phco"]
 [ext_resource type="PackedScene" uid="uid://kq2nvnhe27xp" path="res://Scenes/parallax_background.tscn" id="18_iivbl"]
 [ext_resource type="PackedScene" uid="uid://bbvigejcpqida" path="res://Scenes/end_trigger.tscn" id="20_7nbq1"]
+[ext_resource type="Texture2D" uid="uid://bnxjq36rwh4ov" path="res://Textures/dash_spritesheet_2.png" id="20_exi56"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_81klo"]
+resource_local_to_scene = true
+shader = ExtResource("7_vm72l")
+shader_parameter/tint_color = Vector4(1, 1, 1, 1)
 
 [sub_resource type="Environment" id="Environment_85qyi"]
 background_mode = 3
@@ -53,7 +62,39 @@ tile_set = ExtResource("4_ewbju")
 AbilityName = "Dash"
 enabled = false
 
-[node name="UI" parent="." instance=ExtResource("5_wowpa")]
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control2" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Control" type="PanelContainer" parent="UI/Control2"]
+modulate = Color(1, 1, 1, 0.392157)
+layout_mode = 0
+offset_right = 240.0
+offset_bottom = 160.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Wheel" parent="UI" node_paths=PackedStringArray("fxs") instance=ExtResource("6_mg4q0")]
+position = Vector2(120, 160)
+rotation = 567.687
+fxs = [null, null, null, null, null, null, null, null]
+colors = Array[Color]([Color(0.584314, 0.764706, 0.913725, 1), Color(0.752941, 0.898039, 0.952941, 1), Color(0.529412, 0.760784, 0.576471, 1), Color(0.698039, 0.858824, 0.627451, 1), Color(0.905882, 0.921569, 0.737255, 1), Color(0.901961, 0.811765, 0.631373, 1), Color(0.619608, 0.329412, 0.462745, 1), Color(0.741176, 0.443137, 0.509804, 1)])
+Res = Vector2i(16, 16)
+mat = SubResource("ShaderMaterial_81klo")
+tex = ExtResource("8_22asu")
+
+[node name="LoneTreeSmol" type="Sprite2D" parent="UI"]
+visible = false
+position = Vector2(112, 32)
+rotation = -3.14159
+scale = Vector2(0.266473, 0.973576)
+texture = ExtResource("9_fkdbe")
 
 [node name="Player" parent="." instance=ExtResource("5_rfjv2")]
 position = Vector2(-432, 0)
@@ -111,6 +152,14 @@ editor_draw_drag_margin = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_85qyi")
 
-[node name="EndTrigger" parent="." node_paths=PackedStringArray("efx_manager") instance=ExtResource("20_7nbq1")]
-position = Vector2(1240, -656)
+[node name="EndTrigger" parent="." node_paths=PackedStringArray("efx_manager", "new_target") instance=ExtResource("20_7nbq1")]
+position = Vector2(1264, -656)
 efx_manager = NodePath("../Effect_Manager")
+new_target = NodePath("../Node2D")
+
+[node name="DashSpritesheet2" type="Sprite2D" parent="."]
+position = Vector2(1434, -651)
+texture = ExtResource("20_exi56")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(1303, -597)
