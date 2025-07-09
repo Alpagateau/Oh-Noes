@@ -36,12 +36,7 @@ func update(delta: float) -> void:
 			player.velocity.y += delta * downward_accel
 		if was_grounded:
 			coyote_timer.start()
-	
-	if !can_jump:
-		if Input.is_action_just_released("Action"):
-			if player.velocity.y < 0: 
-				player.velocity.y /= jump_divider
-	
+
 	if Input.is_action_just_pressed("Action"):
 		jump()
 	was_grounded = wall_grip.gripped
