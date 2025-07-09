@@ -13,7 +13,6 @@ func update(delta: float) -> void:
 		var direction := Input.get_axis("D-Left", "D-Right")
 		if direction:
 			if sign(direction) != sign(player.velocity.x):
-				#use turn 
 				player.velocity.x += turn * direction * delta
 			else:
 				player.velocity.x += accel * direction * delta

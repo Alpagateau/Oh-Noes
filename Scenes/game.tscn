@@ -54,6 +54,7 @@ AbilityName = "Dash"
 enabled = false
 
 [node name="UI" parent="." instance=ExtResource("5_wowpa")]
+visible = false
 
 [node name="Player" parent="." instance=ExtResource("5_rfjv2")]
 position = Vector2(-432, 0)

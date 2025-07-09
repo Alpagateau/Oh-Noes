@@ -6,19 +6,6 @@ class_name Ability extends Node
 var player:PlayerController
 var locks:Array[String] = []
 
-#
-#	Crédits 
-#	- Degat -> --Credit -> respawn
-#	- Somme pts finaux 
-#	- Gamble credits for credits
-#   - Speed
-#
-#	Calcul Final :
-#   - Bonuses (temps | meutre | greed)
-#   - Credits
-#   - Niveaux passés
-
-
 func lock(caller):
 	if caller.name in locks:
 		return 
