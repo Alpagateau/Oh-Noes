@@ -6,7 +6,7 @@
 [ext_resource type="TileSet" uid="uid://bcmdrpnyr1jbe" path="res://tilemap.tres" id="4_ewbju"]
 [ext_resource type="PackedScene" uid="uid://fd7r2ov7v7ac" path="res://Scenes/set_ability.tscn" id="5_iivbl"]
 [ext_resource type="PackedScene" uid="uid://b3k88t2gjkwl6" path="res://Scenes/player.tscn" id="5_rfjv2"]
-[ext_resource type="PackedScene" uid="uid://c0s0yb1106x0j" path="res://Scenes/ui.tscn" id="5_wowpa"]
+[ext_resource type="PackedScene" uid="uid://c0s0yb1106x0j" path="res://Scenes/wheel_ui.tscn" id="5_wowpa"]
 [ext_resource type="PackedScene" uid="uid://buha05i1pnpng" path="res://Scenes/Abilities/dash.tscn" id="6_1phco"]
 [ext_resource type="PackedScene" uid="uid://vbuoi5nhuhd7" path="res://Scenes/shadow.tscn" id="6_nb51f"]
 [ext_resource type="PackedScene" uid="uid://d1g473tkrecg1" path="res://Scenes/Abilities/gravity.tscn" id="7_nb51f"]
@@ -53,7 +53,7 @@ tile_set = ExtResource("4_ewbju")
 AbilityName = "Dash"
 enabled = false
 
-[node name="UI" parent="." instance=ExtResource("5_wowpa")]
+[node name="wheel_ui" parent="." instance=ExtResource("5_wowpa")]
 visible = false
 
 [node name="Player" parent="." instance=ExtResource("5_rfjv2")]

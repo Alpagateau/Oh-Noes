@@ -1,0 +1,47 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://dxc1a7frj1ju"]
+
+[ext_resource type="FontFile" uid="uid://8avxfapp8euj" path="res://upheavtt.ttf" id="1_e1x85"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e1x85"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cjfk0"]
+bg_color = Color(0.868986, 0.868985, 0.868985, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vj6dk"]
+bg_color = Color(0.925353, 0.925353, 0.925353, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_110ce"]
+bg_color = Color(0.654234, 0.654231, 0.654232, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[resource]
+default_font = ExtResource("1_e1x85")
+default_font_size = 24
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_disabled_color = Color(0, 0, 0, 0.14902)
+Button/colors/font_focus_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_pressed_color = Color(0.145098, 0.145098, 0.270588, 1)
+Button/colors/font_outline_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(0, 0.741176, 1, 1)
+Button/constants/outline_size = 1
+Button/styles/focus = SubResource("StyleBoxEmpty_e1x85")
+Button/styles/hover = SubResource("StyleBoxFlat_cjfk0")
+Button/styles/normal = SubResource("StyleBoxFlat_vj6dk")
+Button/styles/pressed = SubResource("StyleBoxFlat_110ce")
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/colors/font_outline_color = Color(1, 1, 1, 1)
+Label/constants/outline_size = 2
