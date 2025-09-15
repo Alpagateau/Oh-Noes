@@ -109,6 +109,7 @@ script = ExtResource("1_0t63x")
 wait_time = 3.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
 sprite_frames = SubResource("SpriteFrames_relgi")
 autoplay = "default"
 frame_progress = 0.197239

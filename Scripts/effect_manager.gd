@@ -19,6 +19,7 @@ func _process(delta: float) -> void:
 	for a in effects:
 		if !a.is_physics && a.enabled:
 			a.update(delta)
+	# TODO Add collider to spikes here
 
 func _physics_process(delta: float) -> void:
 	for a in effects:
@@ -38,11 +39,11 @@ func populate():
 		if a.enabled:
 			a.start()
 
-func get_ability(name:String):
+func get_ability(id:String):
 	if effects.size() == 0:
 		populate()
 	for a in effects:
-		if a.name == name:
+		if a.name == id:
 			return a
 
 func command_list_effect():

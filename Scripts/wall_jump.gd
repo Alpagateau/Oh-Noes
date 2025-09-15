@@ -1,6 +1,6 @@
 extends Ability
 
-@export var jump_force:float = 200
+@export var jump_force:float = 250
 @export var bounce:float = 100
 @export var downward_accel = 1
 @export var buffer_timer:Timer 

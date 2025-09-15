@@ -57,7 +57,7 @@ enabled = false
 visible = false
 
 [node name="Player" parent="." instance=ExtResource("5_rfjv2")]
-position = Vector2(-432, 0)
+position = Vector2(-600, -531)
 shadowPrefab = ExtResource("6_nb51f")
 
 [node name="Dash" parent="Player" instance=ExtResource("6_1phco")]
