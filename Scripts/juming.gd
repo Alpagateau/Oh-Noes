@@ -15,8 +15,6 @@ var dsh:Ability
 var lst_jump_pos:float = 0
 var stop_jump:bool = false
 
-signal start_jumping
-
 func start():
 	super.start()
 	dsh = player.get_ability("Dash")

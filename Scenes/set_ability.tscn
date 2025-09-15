@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://fd7r2ov7v7ac"]
 
-[ext_resource type="Script" uid="uid://b484bpqmdw4fd" path="res://set_ability.gd" id="1_d05dc"]
+[ext_resource type="Script" uid="uid://b484bpqmdw4fd" path="res://Scripts/set_ability.gd" id="1_d05dc"]
 
 [node name="SetAbility" type="Node2D"]
 script = ExtResource("1_d05dc")
